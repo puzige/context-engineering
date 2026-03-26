@@ -20,10 +20,9 @@ import sys
 import textwrap
 import time
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Tuple
 
-from dotenv import load_dotenv
 from openai import OpenAI
 from pydantic import BaseModel, Field, ValidationError
 from rich.console import Console
@@ -31,8 +30,8 @@ from rich.markdown import Markdown
 from rich.prompt import Prompt
 
 import numpy as np
-import faiss  # type: ignore
-from sentence_transformers import SentenceTransformer  # type: ignore
+import faiss
+from sentence_transformers import SentenceTransformer
 
 
 # -----------------------------
@@ -69,7 +68,7 @@ class ProfileStore:
     def upsert(self, updates: Dict[str, str]) -> None:
         if not updates:
             return
-        now = datetime.utcnow().isoformat()
+        now = datetime.now(timezone.utc).isoformat()
         with sqlite3.connect(self.db_path) as conn:
             for k, v in updates.items():
                 conn.execute("""
@@ -110,10 +109,14 @@ class EpisodicStore:
 
     def _load_or_create_index(self) -> faiss.Index:
         if os.path.exists(self.index_path):
-            return faiss.read_index(self.index_path)
+            index = faiss.read_index(self.index_path)
+            # Ensure the loaded index supports add_with_ids
+            if not isinstance(index, faiss.IndexIDMap):
+                index = faiss.IndexIDMap(index)
+            return index
         # Cosine similarity via inner product on normalized vectors
         index = faiss.IndexFlatIP(self.dim)
-        return index
+        return faiss.IndexIDMap(index)
 
     def _init_db(self) -> None:
         with sqlite3.connect(self.db_path) as conn:
@@ -135,15 +138,20 @@ class EpisodicStore:
         if not memories:
             return 0
 
-        now = datetime.utcnow().isoformat()
+        now = datetime.now(timezone.utc).isoformat()
         ids: List[int] = []
         texts: List[str] = []
         with sqlite3.connect(self.db_path) as conn:
+            # Fetch the starting ID once
+            row = conn.execute("SELECT COALESCE(MAX(id), 0) + 1 FROM episodic").fetchone()
+            next_id = int(row[0])
+
             for mem in memories:
                 mem = mem.strip()
                 if not mem:
                     continue
-                mem_id = self._next_id()
+                mem_id = next_id
+                next_id += 1
                 conn.execute("INSERT INTO episodic(id, text, created_at) VALUES(?, ?, ?)", (mem_id, mem, now))
                 ids.append(mem_id)
                 texts.append(mem)
@@ -187,7 +195,7 @@ class EpisodicStore:
         with sqlite3.connect(self.db_path) as conn:
             conn.execute("DELETE FROM episodic")
             conn.commit()
-        self.index = faiss.IndexFlatIP(self.dim)
+        self.index = faiss.IndexIDMap(faiss.IndexFlatIP(self.dim))
         faiss.write_index(self.index, self.index_path)
 
 
@@ -351,12 +359,10 @@ def is_command(text: str) -> bool:
 
 
 # -----------------------------
-# Main REPL
+# Main
 # -----------------------------
 
 def main() -> int:
-    load_dotenv()
-
     parser = argparse.ArgumentParser(description="Memory Coach (hands-on memory management demo)")
     parser.add_argument("--model", default=os.getenv("MODEL", "gpt-4.1-mini"), help="Chat model name")
     parser.add_argument("--data-dir", default=os.getenv("DATA_DIR", ".memory_coach"), help="Directory for memory data")

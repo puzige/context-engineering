@@ -18,13 +18,12 @@ import os
 from collections import deque
 from typing import Deque, List, cast
 
-from dotenv import load_dotenv
 from rich.console import Console
 from rich.markdown import Markdown
 from rich.prompt import Prompt
 
 from agents import Agent, Runner, set_tracing_disabled
-from agents.items import TResponseInputItem  # dict-like items
+from agents.items import TResponseInputItem
 from agents.memory.session import SessionABC
 
 ROLE_USER = "user"
@@ -272,7 +271,7 @@ async def run_repl(strategy: str, max_turns: int, refresh_every: int, model: str
             if cmd == "/help":
                 console.print(help_text)
             elif cmd == "/state":
-                state = await cast(object, session).debug_state()  # type: ignore[attr-defined]
+                state = await cast(object, session).debug_state()
                 console.print("[bold]Session state[/bold]")
                 console.print(state + "\n")
             elif cmd == "/reset":
@@ -292,8 +291,6 @@ async def run_repl(strategy: str, max_turns: int, refresh_every: int, model: str
 
 
 def main() -> int:
-    load_dotenv()
-
     parser = argparse.ArgumentParser(description="OpenAI Agents SDK session memory demo")
     parser.add_argument("--strategy", choices=["trim", "summarize"], default="trim")
     parser.add_argument("--max-turns", type=int, default=int(os.getenv("MAX_TURNS", "8")))

@@ -18,7 +18,6 @@ import sys
 from datetime import datetime, UTC
 from typing import Any, Dict, List, Optional, Sequence
 
-from dotenv import load_dotenv
 from openai import OpenAI
 from rich.console import Console
 from rich.markdown import Markdown
@@ -155,7 +154,6 @@ Commands:
 
 
 def main() -> int:
-    load_dotenv()
     console = Console()
 
     parser = argparse.ArgumentParser(description="GPT-5 + Mem0 + Qdrant memory-backed chat (CLI)")
@@ -199,7 +197,7 @@ def main() -> int:
             elif cmd == "/memories":
                 try:
                     # Not all versions expose get_all in OSS mode; handle defensively.
-                    memories = mem0.get_all(user_id=args.user)  # type: ignore[attr-defined]
+                    memories = mem0.get_all(user_id=args.user)
                     mem_list = normalize_mem0_results(memories, max_items=10)
                     console.print("[bold]Stored memories (sample)[/bold]")
                     console.print(format_memories_for_prompt(mem_list) + "\n")
@@ -209,14 +207,14 @@ def main() -> int:
                 try:
                     # Prefer delete_all if available; otherwise fall back to delete by search results.
                     if hasattr(mem0, "delete_all"):
-                        mem0.delete_all(user_id=args.user)  # type: ignore[attr-defined]
+                        mem0.delete_all(user_id=args.user)
                     else:
                         results = mem0.search(" ", user_id=args.user)
                         items = results if isinstance(results, list) else results.get("results", [])
                         for it in items:
                             mid = it.get("id") if isinstance(it, dict) else None
                             if mid and hasattr(mem0, "delete"):
-                                mem0.delete(mid)  # type: ignore[attr-defined]
+                                mem0.delete(mid)
                     console.print("Cleared stored memories for this user (best-effort).\n")
                 except Exception as e:
                     console.print(f"[yellow]Unable to delete memories in this setup:[/yellow] {e}\n")
