@@ -1,19 +1,17 @@
 # Function calling: current time
 
-This example demonstrates the *function-calling loop* pattern using an [OpenAI](https://openai.com/) GPT model. In this pattern, the model can call external functions to get information. The loop is in the smallest useful form: the model decides when it needs external data, calls a function, and then uses the function result to answer.
+This example demonstrates the *function-calling* pattern using an [OpenAI](https://openai.com/) GPT model in JavaScript. In this pattern, the model can call external functions to get information. The loop is in the smallest useful form: the model decides when it needs external data, calls a function, and then uses the function result to answer.
 
 ## Requirements
 
-* [Python](https://www.python.org/) 3.6+
+* [Node.js](https://nodejs.org/) 18+
 * An [OpenAI API key](https://platform.openai.com/api-keys)
 
 ## Steps for running this example in the shell
 
 1.  Install dependencies:
 ```bash
-python -m venv .venv
-source .venv/bin/activate  # Windows cmd: .venv\Scripts\activate # Windows PowerShell: .venv\Scripts\Activate.ps1
-pip install -r requirements.txt
+npm install
 ```
 
 2. Export your OpenAI API key as an environment variable:
@@ -23,7 +21,7 @@ export OPENAI_API_KEY="sk-..." # Windows cmd: set OPENAI_API_KEY="sk-..." # Wind
 
 3. Run the script:
 ```bash
-python openai-gpt-basic.py
+npm start
 ```
 
 ## Output
@@ -32,6 +30,6 @@ When you run the script, it will send a fixed user prompt (`What time is it righ
 
 ```
 User: What time is it right now?
-        Tool requested: get_current_time({'format': '%Y-%m-%d %H:%M:%S'})
-Assistant: The current time is 2026-03-25 18:50:27.
+        Tool requested: get_current_time({"format":"%Y-%m-%d %H:%M:%S"})
+Assistant: The current time is 2026-03-25 19:17:32.
 ```

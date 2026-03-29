@@ -76,6 +76,8 @@ def query_model(prompt, model="gpt-4o-mini"):
             tools=TOOLS,
         )
 
+    return response.output_text
+
 
 if __name__ == "__main__":
     prompt = "What time is it right now?"
