@@ -125,6 +125,7 @@ Although the concept of _context engineering_ is new, the underlying technologie
 - [Thinking Beyond RAG: Why Context-Augmented Generation Is Changing the Game](https://www.helicone.ai/blog/implement-and-monitor-cag) (Yusuf Ishola, 2025) Explanation of Context-Augmented Generation and how it improves over traditional RAG.
 - [RAG vs CAG vs Fine-Tuning](https://newsletter.rafapaez.com/p/rag-vs-cag-vs-fine-tuning) (Rafa Paez, 2025) Comparative analysis of three approaches: Retrieval-Augmented Generation (RAG), Contextual Augmented Generation (CAG), and fine-tuning, discussing trade-offs in accuracy, adaptability, cost, and maintenance for each.
 - [RAG-Anything: All-in-One RAG Framework](https://github.com/HKUDS/RAG-Anything) (Data Intelligence Lab@HKU, 2026) Open-source framework providing an all-in-one pipeline for RAG.
+- [Agentic RAG for Dummies](https://github.com/GiovanniPasq/agentic-rag-for-dummies) (Giovanni Pasquale, 2026) Beginner-friendly guide to understanding and implementing Agentic RAG, with practical examples and code snippets.
 
 ### AI for software development
 
