@@ -11,6 +11,8 @@
     <modules>
         <module>mcp-java-sdk</module>
         <module>mcp-spring-ai</module>
+        <module>mcp-micronaut</module>
+        <module>mcp-quarkus</module>
     </modules>
 
 </project>
