@@ -16,7 +16,7 @@ This book aims to provide a strong, general-purpose theoretical foundation for c
 2. System instructions and user prompts
 3. External knowledge and retrieval
 4. Tools and memory for AI agents
-5. State and multi-agent systems
+5. State and orchestration in agentic systems
 6. Context management and evaluation
 7. Context in AI frameworks
 8. Context engineering in real-world environments
