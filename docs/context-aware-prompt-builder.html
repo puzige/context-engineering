@@ -195,9 +195,6 @@
       <div class="brand">
         <div class="title">Context-aware prompt builder</div>
         <div class="subtitle">Design, compare, and reuse structured prompts across multiple frameworks and AI models.</div>
-      </div>
-
-      <div class="header-right">
         <div class="selectors-row">
           <div class="selector-block">
             <span class="selector-label">Framework</span>
@@ -207,8 +204,14 @@
             <span class="selector-label">Target model</span>
             <select id="modelSelect" aria-label="Target model"></select>
           </div>
+          <div class="selector-block">
+            <span class="selector-label">Prompt sample</span>
+            <select id="sampleSelect" aria-label="Prompt sample"></select>
+          </div>
         </div>
+      </div>
 
+      <div class="header-right">
         <div class="actions">
           <button id="copyAll" class="btn-accent" title="Copy prompt">Copy prompt</button>
           <button id="exportData" class="btn" title="Download all fields as JSON">Export</button>
@@ -521,6 +524,7 @@
       const toast = document.getElementById('toast');
       const frameworkSelect = document.getElementById('frameworkSelect');
       const modelSelect = document.getElementById('modelSelect');
+      const sampleSelect = document.getElementById('sampleSelect');
       const fieldsContainer = document.getElementById('fields');
 
       let state = {
@@ -669,6 +673,150 @@
         });
         modelSelect.value = state.activeModelId;
       }
+
+      function renderSampleOptions() {
+        sampleSelect.innerHTML = '';
+        const options = [
+          { value: 'none', label: 'None' },
+          { value: 'architect', label: '1. Architect' },
+          { value: 'developer', label: '2. Developer' },
+          { value: 'debugger', label: '3. Debugger' },
+          { value: 'reviewer', label: '4. Reviewer' },
+          { value: 'refactorer', label: '5. Refactorer' },
+          { value: 'tester', label: '6. Tester' },
+          { value: 'documenter', label: '7. Documenter' }
+        ];
+        options.forEach(o => {
+          const opt = document.createElement('option');
+          opt.value = o.value;
+          opt.textContent = o.label;
+          sampleSelect.appendChild(opt);
+        });
+        sampleSelect.value = 'none';
+      }
+
+      // ---- Sample loading -------------------------------------------------
+      const SAMPLE_FILES = {
+        architect: '01_architect.json',
+        developer: '02_developer.json',
+        debugger: '03_debugger.json',
+        reviewer: '04_reviewer.json',
+        refactorer: '05_refactorer.json',
+        tester: '06_tester.json',
+        documenter: '07_documenter.json'
+      };
+
+      const SAMPLE_BASE_PATH = 'sdlc_prompt_library/';
+      const sampleCache = {};
+
+      async function loadSample(sampleKey) {
+        if (sampleCache[sampleKey]) return sampleCache[sampleKey];
+        const file = SAMPLE_FILES[sampleKey];
+        const res = await fetch(SAMPLE_BASE_PATH + file);
+        const data = await res.json();
+        sampleCache[sampleKey] = data;
+        return data;
+      }
+
+      function clearAllFields() {
+        const fw = getActiveFramework();
+        const data = getFrameworkData(fw.id);
+        fw.cards.forEach(card => {
+          data[card.id] = '';
+        });
+        renderFields();
+        save();
+      }
+
+      function applyFrameworkByName(name) {
+        let normalized = name.toLowerCase();
+
+        // map external names -> internal ids
+        if (normalized === '10-step') normalized = 'tenPart';
+
+        if (!FRAMEWORKS[normalized]) return;
+        state.activeFrameworkId = normalized;
+        frameworkSelect.value = normalized;
+        renderFields();
+      }
+
+      function fillFieldsFromSample(promptData) {
+        const fw = getActiveFramework();
+        const data = getFrameworkData(fw.id);
+
+        // clear first
+        Object.keys(data).forEach(k => data[k] = '');
+
+        Object.entries(promptData).forEach(([key, value]) => {
+          let fieldId = null;
+
+          if (fw.id === 'costar') {
+            fieldId = `co_${key}`;
+          }
+
+          if (fw.id === 'tenPart') {
+            const map = {
+              context: 'role',
+              tone: 'style',
+              background: 'background',
+              details: 'constraints',
+              examples: 'examples',
+              history: 'history',
+              request: 'request',
+              thinking: 'reasoning',
+              output: 'format',
+              prefilled: 'response'
+            };
+            fieldId = map[key];
+          }
+
+          if (fw.id === 'crispe') {
+            const map = {
+              capacity: 'cr_capacity',
+              insight: 'cr_insights',
+              statement: 'cr_steps',
+              personality: 'cr_personalization',
+              experiment: 'cr_examples'
+            };
+            fieldId = map[key];
+          }
+
+          if (fw.id === 'rtf') {
+            const map = {
+              role: 'rt_role',
+              task: 'rt_task',
+              format: 'rt_format'
+            };
+            fieldId = map[key];
+          }
+
+          if (fieldId && data.hasOwnProperty(fieldId)) {
+            data[fieldId] = value;
+          }
+        });
+
+        renderFields();
+        save();
+      }
+
+      sampleSelect.addEventListener('change', async (e) => {
+        const val = e.target.value;
+
+        if (val === 'none') {
+          clearAllFields();
+          return;
+        }
+
+        try {
+          const data = await loadSample(val);
+          applyFrameworkByName(data.framework);
+          fillFieldsFromSample(data.prompt);
+          showToast('Sample loaded');
+        } catch (err) {
+          console.error('Failed to load sample', err);
+          showToast('⚠️ Failed to load sample');
+        }
+      });
 
       // ---- Fields rendering -------------------------------------------------
       function renderFields() {
@@ -1003,6 +1151,7 @@
 
       renderFrameworkOptions();
       renderModelOptions();
+      renderSampleOptions();
 
       if (!tryImportFromHash()) {
         renderFields();
