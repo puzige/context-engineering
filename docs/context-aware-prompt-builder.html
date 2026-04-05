@@ -1010,11 +1010,70 @@
       });
 
       document.getElementById('exportData').addEventListener('click', () => {
-        const dataToExport = JSON.stringify(state, null, 2);
+        const fw = getActiveFramework();
+        const data = getFrameworkData(fw.id);
+
+        function toSampleSchema() {
+          let frameworkName = fw.name;
+          if (fw.id === 'tenPart') frameworkName = '10-step';
+
+          let prompt = {};
+
+          if (fw.id === 'costar') {
+            prompt = {
+              context: data.co_context || '',
+              objective: data.co_objective || '',
+              style: data.co_style || '',
+              tone: data.co_tone || '',
+              audience: data.co_audience || '',
+              response: data.co_response || ''
+            };
+          }
+
+          if (fw.id === 'tenPart') {
+            prompt = {
+              context: data.role || '',
+              tone: data.style || '',
+              background: data.background || '',
+              details: data.constraints || '',
+              examples: data.examples || '',
+              history: data.history || '',
+              request: data.request || '',
+              thinking: data.reasoning || '',
+              output: data.format || '',
+              prefilled: data.response || ''
+            };
+          }
+
+          if (fw.id === 'crispe') {
+            prompt = {
+              capacity: data.cr_capacity || '',
+              insight: data.cr_insights || '',
+              statement: data.cr_steps || '',
+              personality: data.cr_personalization || '',
+              experiment: data.cr_examples || ''
+            };
+          }
+
+          if (fw.id === 'rtf') {
+            prompt = {
+              role: data.rt_role || '',
+              task: data.rt_task || '',
+              format: data.rt_format || ''
+            };
+          }
+
+          return {
+            framework: frameworkName,
+            prompt
+          };
+        }
+
+        const dataToExport = JSON.stringify(toSampleSchema(), null, 2);
         const blob = new Blob([dataToExport], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
-        a.href = url; a.download = 'context-builder-frameworks.json';
+        a.href = url; a.download = 'prompt.json';
         a.click();
         URL.revokeObjectURL(url);
         showToast('Exported to JSON');
@@ -1028,16 +1087,12 @@
           try {
             const obj = JSON.parse(String(reader.result || '{}'));
 
-            if (obj && obj.data && obj.activeFrameworkId) {
-              state = {
-                activeFrameworkId: obj.activeFrameworkId || DEFAULT_FRAMEWORK_ID,
-                activeModelId: obj.activeModelId || DEFAULT_MODEL_ID,
-                data: obj.data || {}
-              };
-            } else if (obj && typeof obj === 'object') {
-              const fwId = state.activeFrameworkId || DEFAULT_FRAMEWORK_ID;
-              if (!state.data[fwId]) state.data[fwId] = {};
-              state.data[fwId] = obj;
+            if (obj && obj.framework && obj.prompt) {
+              applyFrameworkByName(obj.framework);
+              fillFieldsFromSample(obj.prompt);
+            } else {
+              showToast('Unsupported JSON schema');
+              return;
             }
 
             renderFrameworkOptions();
