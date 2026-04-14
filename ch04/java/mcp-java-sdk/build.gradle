@@ -1,0 +1,34 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation platform('io.modelcontextprotocol.sdk:mcp-bom:1.1.1')
+    implementation 'io.modelcontextprotocol.sdk:mcp'
+    implementation 'org.seleniumhq.selenium:selenium-java:4.43.0'
+}
+
+application {
+    mainClass = 'io.github.bonigarcia.ce.McpSeleniumServer'
+}
+
+tasks.jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes 'Main-Class': application.mainClass
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}

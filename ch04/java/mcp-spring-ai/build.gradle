@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.springframework.boot' version '4.0.5'
+    id 'io.spring.dependency-management' version '1.1.0'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://repo.spring.io/milestone' }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter:4.0.5'
+    implementation platform('org.springframework.ai:spring-ai-bom:2.0.0-M4')
+    implementation 'org.springframework.ai:spring-ai-starter-mcp-server'
+    implementation 'org.springframework:spring-web'
+    implementation 'org.seleniumhq.selenium:selenium-java'
+}
+
+application {
+    mainClass = 'io.github.bonigarcia.ce.McpSeleniumServer'
+}

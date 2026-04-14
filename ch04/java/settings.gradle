@@ -1,0 +1,6 @@
+rootProject.name = 'mcp-multi-module'
+
+include 'mcp-java-sdk'
+include 'mcp-micronaut'
+include 'mcp-quarkus'
+include 'mcp-spring-ai'

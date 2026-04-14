@@ -12,19 +12,40 @@ This folder contains a Java implementation of a basic [Model Context Protocol (M
 - [Node.js](https://nodejs.org/)
 - A local browser (e.g., [Chrome](https://www.google.com/chrome/), [Firefox](https://www.firefox.com/))
 
-1.  Install dependencies:
+1. Build the project:
+
+Maven:
 ```bash
 mvn clean package
 ```
 
+Gradle:
+```bash
+gradle clean build
+```
+
 2. Run the server:
+
+Maven build:
 ```bash
 java -jar target/mcp-java-sdk-1.0.0.jar
 ```
 
+Gradle build:
+```bash
+java -jar build/libs/mcp-java-sdk-1.0.0.jar
+```
+
 3. Alternatively, you can debug the MCP server using the MCP Inspector:
+
+Maven build:
 ```bash
 npx @modelcontextprotocol/inspector java -jar target/mcp-java-sdk-1.0.0.jar
+```
+
+Gradle build:
+```bash
+npx @modelcontextprotocol/inspector java -jar build/libs/mcp-java-sdk-1.0.0.jar
 ```
 
 ## Output

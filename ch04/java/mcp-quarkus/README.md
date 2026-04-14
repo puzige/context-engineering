@@ -17,18 +17,39 @@ This folder contains a Quarkus implementation of a basic [Model Context Protocol
 ## Building and running
 
 1. Build the project:
+
+Maven:
 ```bash
 mvn clean package
 ```
 
+Gradle:
+```bash
+gradle clean build
+```
+
 2. Run the server:
+
+Maven build:
 ```bash
 java -jar target/quarkus-app/quarkus-run.jar
 ```
 
+Gradle build:
+```bash
+java -jar build/quarkus-app/quarkus-run.jar
+```
+
 3. Alternatively, you can debug the MCP server using the MCP Inspector:
+
+Maven build:
 ```bash
 npx @modelcontextprotocol/inspector java -jar target/quarkus-app/quarkus-run.jar
+```
+
+Gradle build:
+```bash
+npx @modelcontextprotocol/inspector java -jar build/quarkus-app/quarkus-run.jar
 ```
 
 ## Output

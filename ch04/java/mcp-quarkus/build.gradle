@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'io.quarkus' version '3.34.3'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation enforcedPlatform("io.quarkus.platform:quarkus-bom:3.34.3")
+    implementation "io.quarkiverse.mcp:quarkus-mcp-server-stdio:1.11.1"
+    implementation "io.quarkus:quarkus-arc"
+    implementation "org.seleniumhq.selenium:selenium-java:4.43.0"
+}
+
+application {
+    mainClass = 'io.github.bonigarcia.ce.McpSeleniumServer'
+}

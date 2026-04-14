@@ -17,18 +17,39 @@ This folder contains a Spring-Boot implementation of a basic [Model Context Prot
 ## Building and running
 
 1. Build the project:
+
+Maven:
 ```bash
 mvn clean package
 ```
 
+Gradle:
+```bash
+gradle clean build
+```
+
 2. Run the server:
+
+Maven build:
 ```bash
 java -jar target/mcp-spring-ai-1.0.0.jar
 ```
 
+Gradle build:
+```bash
+java -jar build/libs/mcp-spring-ai-1.0.0.jar
+```
+
 3. Alternatively, you can debug the MCP server using the MCP Inspector:
+
+Maven build:
 ```bash
 npx @modelcontextprotocol/inspector java -jar target/mcp-spring-ai-1.0.0.jar
+```
+
+Gradle build:
+```bash
+npx @modelcontextprotocol/inspector java -jar build/libs/mcp-spring-ai-1.0.0.jar
 ```
 
 ## Output
