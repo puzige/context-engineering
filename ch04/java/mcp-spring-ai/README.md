@@ -37,7 +37,7 @@ java -jar target/mcp-spring-ai-1.0.0.jar
 
 Gradle build:
 ```bash
-java -jar build/libs/mcp-spring-ai-1.0.0.jar
+java -jar build/libs/mcp-spring-ai.jar
 ```
 
 3. Alternatively, you can debug the MCP server using the MCP Inspector:
@@ -49,7 +49,7 @@ npx @modelcontextprotocol/inspector java -jar target/mcp-spring-ai-1.0.0.jar
 
 Gradle build:
 ```bash
-npx @modelcontextprotocol/inspector java -jar build/libs/mcp-spring-ai-1.0.0.jar
+npx @modelcontextprotocol/inspector java -jar build/libs/mcp-spring-ai.jar
 ```
 
 ## Output

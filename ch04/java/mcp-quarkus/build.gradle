@@ -1,6 +1,5 @@
 plugins {
     id 'java'
-    id 'application'
     id 'io.quarkus' version '3.34.3'
 }
 
@@ -12,10 +11,6 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
     }
-}
-
-application {
-    mainClass = 'io.github.bonigarcia.ce.McpSeleniumServer'
 }
 
 dependencies {
