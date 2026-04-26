@@ -14,7 +14,16 @@ This example is a minimal runnable example illustrating *state* in Microsoft Age
 1.  Install dependencies:
 ```bash
 python -m venv .venv
-source .venv/bin/activate  # Windows cmd: .venv\Scripts\activate # Windows PowerShell: .venv\Scripts\Activate.ps1
+
+# macOS/Linux:
+source .venv/bin/activate
+
+# Windows Command Prompt:
+.venv\Scripts\activate.bat
+
+# Windows PowerShell:
+.venv\Scripts\Activate.ps1
+
 pip install -r requirements.txt
 ```
 
