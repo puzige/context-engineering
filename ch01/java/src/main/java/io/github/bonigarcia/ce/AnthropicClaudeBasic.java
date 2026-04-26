@@ -29,13 +29,10 @@ public class AnthropicClaudeBasic implements AutoCloseable {
 
     AnthropicClient client;
     Model model;
-    double temperature;
     long thinkingBudget;
 
-    public AnthropicClaudeBasic(Model model, double temperature,
-            long thinkingBudget) {
+    public AnthropicClaudeBasic(Model model, long thinkingBudget) {
         this.model = model;
-        this.temperature = temperature;
         this.thinkingBudget = thinkingBudget;
 
         // ANTHROPIC_API_KEY should be set as an environment variable
@@ -46,9 +43,7 @@ public class AnthropicClaudeBasic implements AutoCloseable {
         MessageCreateParams.Builder builder = MessageCreateParams.builder()
                 .maxTokens(2048).addUserMessage(prompt).model(model);
         if (thinkingBudget > 0) {
-            builder.enabledThinking(thinkingBudget).temperature(1);
-        } else {
-            builder.temperature(temperature);
+            builder.enabledThinking(thinkingBudget);
         }
 
         long start = System.nanoTime();
@@ -73,20 +68,18 @@ public class AnthropicClaudeBasic implements AutoCloseable {
         client.close();
     }
 
-    @SuppressWarnings("deprecation")
     public static void main(String[] args) {
-        Model model = Model.CLAUDE_3_HAIKU_20240307;
-        double temperature = 0;
+        Model model = Model.CLAUDE_HAIKU_4_5;
         long thinkingBudget = 0;
         try (AnthropicClaudeBasic claude = new AnthropicClaudeBasic(model,
-                temperature, thinkingBudget)) {
+                thinkingBudget)) {
             String prompt = "How many tokens is your context window?";
             System.out.println("=== Basic model ===");
             System.out.println("User: " + prompt);
             String response = claude.queryModel(prompt);
             System.out.println("Claude3: " + response);
 
-            claude.model = Model.CLAUDE_SONNET_4_20250514;
+            claude.model = Model.CLAUDE_SONNET_4_6;
             claude.thinkingBudget = 1024;
             System.out.println("\n=== Advanced model ===");
             System.out.println("User: " + prompt);
