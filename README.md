@@ -1,10 +1,10 @@
 # Context engineering ![](https://bonigarcia.dev/img/context-engineering.png)
 
-**Context engineering** can be defined as the practice of designing systems that provide a Large Language Model (LLM) with all the necessary information to complete a task effectively. It goes beyond prompt engineering since it focuses on building a comprehensive and structured context from various sources like system instructions, external knowledge, memory, tools, and state. The central idea is that the success of a complex LLM-based system depends more on the quality and completeness of the context provided than on the specific wording of the prompt itself.
+**Context engineering** can be defined as the practice of designing systems that provide a Large Language Model (LLM) and AI agents with all the necessary information to complete a task effectively. It goes beyond prompt engineering since it focuses on building a comprehensive and structured context from various sources like system instructions, external knowledge, memory, tools, and state. The central idea is that the success of a complex LLM-based system depends more on the quality and completeness of the context provided than on the specific wording of the prompt itself.
 
 Tobi Lütke, the CEO of Shopify, coined the term _context engineering_ in a [tweet](https://x.com/tobi/status/1935533422589399127) on June 19, 2025. He defined context engineering as _the art of providing all the context for the task to be plausibly solvable by the LLM_. This novel concept captures the essence of the current evolution of LLM-based systems, inspiring others (like me) to understand and define this emerging engineering discipline. Since then, I've been working on a book entitled **Context engineering: the art and science of shaping context-aware AI systems**, to be published by [Manning](https://www.manning.com/) in 2026.
 
-This GitHub repository is intended to be a companion resource for this book and a go-to reference for practitioners looking to understand and adopt the context engineering principles.
+This GitHub repository is intended to be a companion resource for this book and a reference for practitioners looking to understand and adopt the context engineering principles.
 
 _Warning_: This repository is a work in progress, so content and structure may change.
 
@@ -27,9 +27,9 @@ Appendix B. References and further reading
 
 Each chapter of this book starts by explaining the underlying principles and patterns of each thematic block. Then, the final part of each chapter is devoted to presenting specific examples. This GitHub repository contains all these examples. Moreover, I will include new examples and maintain the existing ones even after the book is published. The goal is to provide an open-source, updated reference for everyone interested in context engineering.
 
-## Online tools
+## Online resources
 
-This repository includes interactive, browser-based tools that complement the book and help you apply context engineering concepts in practice.
+This repository includes interactive web pages that complement the book and help you apply context engineering concepts in practice.
 
 ### 1. Context-aware Prompt Builder
 
@@ -44,7 +44,7 @@ Key capabilities:
 - Measure approximate context usage for different models
 - Load curated prompt samples for common SDLC roles
 
-This tool is especially useful for **creating and iterating on prompts** in a structured, repeatable way.
+This tool is especially useful for creating and iterating on prompts in a structured, repeatable way.
 
 ---
 
@@ -69,7 +69,7 @@ Key capabilities:
 - Inspect full structured prompts for each role
 - Copy prompts directly for reuse or adaptation
 
-This tool is designed as a **reference library**, helping you understand how structured prompts vary across roles and frameworks.
+This tool is designed as a reference library, helping you understand how structured prompts vary across roles and frameworks.
 
 
 ## Resources
@@ -194,16 +194,6 @@ Although the concept of _context engineering_ is new, the underlying technologie
 - [3Blue1Brown](https://youtube.com/@3blue1brown) Visualizing mathematics and the "why" behind neural networks and linear algebra.
 - [Krish Naik](https://youtube.com/@krishnaik06) Comprehensive resource for data science, MLOps, and Generative AI with a focus on industry readiness.
 - [CampusX](https://youtube.com/@campusx-official) Structured mentorship and bootcamps for Python, machine learning, and deep learning.
-
-### Papers
-
-- Mei, Lingrui, Jiayu Yao, Yuyao Ge, Yiwei Wang, Baolong Bi, Yujun Cai, Jiazhi Liu et al. "[A Survey of Context Engineering for Large Language Models](https://arxiv.org/abs/2507.13334)." arXiv preprint arXiv:2507.13334 (2025).
-- Hua, Qishuo, Lyumanshan Ye, Dayuan Fu, Yang Xiao, Xiaojie Cai, Yunze Wu, Jifan Lin, Junfei Wang, and Pengfei Liu. "[Context Engineering 2.0: The Context of Context Engineering](https://arxiv.org/abs/2510.26493)." arXiv preprint arXiv:2510.26493 (2025).
-- Zhang, Qizheng, Changran Hu, Shubhangi Upasani, Boyuan Ma, Fenglu Hong, Vamsidhar Kamanuru, Jay Rainton et al. "[Agentic Context Engineering: Evolving Contexts for Self-Improving Language Models](https://arxiv.org/abs/2510.04618)." arXiv preprint arXiv:2510.04618 (2025).
-- Xu, Xiwei, Hans Weytjens, Dawen Zhang, Qinghua Lu, Ingo Weber, and Liming Zhu. "[RAGOps: Operating and Managing Retrieval-Augmented Generation Pipelines](https://arxiv.org/abs/2506.03401)." arXiv preprint arXiv:2506.03401 (2025).
-- Wang, Zexin, Jingjing Li, Quan Zhou, Haotian Si, Yuanhao Liu, Jianhui Li, Gaogang Xie, Fei Sun, Dan Pei, and Changhua Pei. "[A Survey on AgentOps: Categorization, Challenges, and Future Directions](https://arxiv.org/abs/2508.02121)." arXiv preprint arXiv:2508.02121 (2025).
-- Xiao, Tong, and Jingbo Zhu. "[Foundations of large language models](https://arxiv.org/abs/2501.09223)." arXiv preprint arXiv:2501.09223 (2025).
-
 
 ## Contributing
 
