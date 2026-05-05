@@ -18,6 +18,7 @@ This folder contains Python examples for different RAG patterns, including local
 - `cag/`: Cache-augmented generation using KV cache.
 - `local-rag/`: Fully local RAG setup.
 - `ragflow-basic/`: Basic example using the RAGFlow Python SDK.
+- `vectorless-rag-pageindex/`: Vectorless RAG with PageIndex.
 
 ## Running the examples
 
