@@ -38,6 +38,13 @@ This chapter provides the foundations for interacting with different model provi
 - Google: [Python](./ch01/python/google-gemini-basic) · [Jupyter](./ch01/jupyter/google-gemini-basic.ipynb) · [JavaScript](./ch01/javascript/google-gemini-basic) · [Java](./ch01/java/src/main/java/io/github/bonigarcia/ce/GoogleGeminiBasic.java)
 - Ollama: [Python](./ch01/python/ollama-local-basic) · [Jupyter](./ch01/jupyter/ollama-local-basic.ipynb) · [JavaScript](./ch01/javascript/ollama-local-basic) · [Java](./ch01/java/src/main/java/io/github/bonigarcia/ce/OllamaLocalBasic.java)
 
+#### Chapter 2. System instructions and user prompts
+This chapter covers the definition and usage of system instructions (persona, tone, constraints) and user prompts to shape the model behavior. It also introduces programmatic prompting using DSPy (Chain-of-Thought and ReAct):
+- OpenAI: [Python](./ch02/python/openai-gpt-system-prompt) · [Jupyter](./ch02/jupyter/openai_gpt_system_prompt.ipynb) · [JavaScript](./ch02/javascript/openai-gpt-system-prompt) · [Java](./ch02/java/src/main/java/io/github/bonigarcia/ce/OpenAiGptSystemPrompt.java)
+- Anthropic: [Python](./ch02/python/anthropic-claude-system-prompt) · [Jupyter](./ch02/jupyter/anthropic_claude_system_prompt.ipynb) · [JavaScript](./ch02/javascript/anthropic-claude-system-prompt) · [Java](./ch02/java/src/main/java/io/github/bonigarcia/ce/AnthropicClaudeSystemPrompt.java)
+- Google: [Python](./ch02/python/google-gemini-system-prompt) · [Jupyter](./ch02/jupyter/google_gemini_system_prompt.ipynb) · [JavaScript](./ch02/javascript/google-gemini-system-prompt) · [Java](./ch02/java/src/main/java/io/github/bonigarcia/ce/GoogleGeminiSystemPrompt.java)
+- DSPy: [Python](./ch02/python/dspy-cot-vs-react) · [Jupyter](./ch02/jupyter/dspy_cot_vs_react.ipynb)
+
 ## Online resources
 
 This repository includes interactive web pages that complement the book and help you apply context engineering concepts in practice.
