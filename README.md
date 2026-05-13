@@ -13,15 +13,17 @@ _Warning_: This repository is a work in progress, so content and structure may c
 This book aims to provide a strong, general-purpose theoretical foundation for context engineering, supported by hands-on examples. Its table of contents is the following:
 
 1. Introduction to context engineering
-2. System instructions and user prompts
+2. System instructions
 3. External knowledge and retrieval
-4. Tools and memory in AI agents
-5. State and orchestration in agentic systems
-6. Context management, evaluation, and observability
-7. AI frameworks for context engineering
-8. Context engineering in real-world environments
-9. Context engineering through the software development lifecycle
-10. State of the art on context engineering  
+4. Tools in AI agents
+5. Memory and state
+6. User prompts
+7. Context management and orchestration
+8. Evaluation and observability
+9. Governance and operations
+10. AI frameworks for context engineering
+11. Context engineering for software development
+12. State of the art on context engineering  
 Appendix A. The AI ecosystem  
 Appendix B. References and further reading
 
@@ -38,12 +40,11 @@ This chapter provides the foundations for interacting with different model provi
 - Google: [Python](./ch01/python/google-gemini-basic) · [Jupyter](./ch01/jupyter/google-gemini-basic.ipynb) · [JavaScript](./ch01/javascript/google-gemini-basic) · [Java](./ch01/java/src/main/java/io/github/bonigarcia/ce/GoogleGeminiBasic.java)
 - Ollama: [Python](./ch01/python/ollama-local-basic) · [Jupyter](./ch01/jupyter/ollama-local-basic.ipynb) · [JavaScript](./ch01/javascript/ollama-local-basic) · [Java](./ch01/java/src/main/java/io/github/bonigarcia/ce/OllamaLocalBasic.java)
 
-#### Chapter 2. System instructions and user prompts
-This chapter covers the definition and usage of system instructions (persona, tone, constraints) and user prompts to shape the model behavior. It also introduces programmatic prompting using DSPy (Chain-of-Thought and ReAct):
+#### Chapter 2. System instructions
+This chapter covers the definition and usage of the system instructions (system prompts, agent skills, and instructions artifacts) as a foundation layer to shape the model behavior:
 - OpenAI: [Python](./ch02/python/openai-gpt-system-prompt) · [Jupyter](./ch02/jupyter/openai_gpt_system_prompt.ipynb) · [JavaScript](./ch02/javascript/openai-gpt-system-prompt) · [Java](./ch02/java/src/main/java/io/github/bonigarcia/ce/OpenAiGptSystemPrompt.java)
 - Anthropic: [Python](./ch02/python/anthropic-claude-system-prompt) · [Jupyter](./ch02/jupyter/anthropic_claude_system_prompt.ipynb) · [JavaScript](./ch02/javascript/anthropic-claude-system-prompt) · [Java](./ch02/java/src/main/java/io/github/bonigarcia/ce/AnthropicClaudeSystemPrompt.java)
 - Google: [Python](./ch02/python/google-gemini-system-prompt) · [Jupyter](./ch02/jupyter/google_gemini_system_prompt.ipynb) · [JavaScript](./ch02/javascript/google-gemini-system-prompt) · [Java](./ch02/java/src/main/java/io/github/bonigarcia/ce/GoogleGeminiSystemPrompt.java)
-- DSPy: [Python](./ch02/python/dspy-cot-vs-react) · [Jupyter](./ch02/jupyter/dspy_cot_vs_react.ipynb)
 
 #### Chapter 3. External knowledge and retrieval
 This chapter explores different patterns for providing external knowledge to the model. It covers Retrieval-Augmented Generation (RAG) using different retrievers and models, Cache-Augmented Generation (CAG), and context stuffing (injecting data directly into the prompt):
@@ -52,11 +53,10 @@ This chapter explores different patterns for providing external knowledge to the
 - CAG: [Python](./ch03/python/cag) · [Jupyter](./ch03/jupyter/cag.ipynb)
 - Context stuffing: [Python](./ch03/python/context-stuffing-system-prompt) · [Jupyter](./ch03/jupyter/context_stuffing_system_prompt.ipynb)
 
-#### Chapter 4. Tools and memory for AI agents
+#### Chapter 4. Tools in AI agents
 This chapter focuses on extending AI capabilities through tools and memory. It covers tool use (function calling), the Model Context Protocol (MCP) for standardized tool integration, and various memory patterns to maintain context over time:
 - Function calling: [Python](./ch04/python/function_calling_time) · [JavaScript](./ch04/javascript/function_calling_time)
 - MCP: [Python](./ch04/python/mcp_server) · [JavaScript](./ch04/javascript/mcp_server) · [Java](./ch04/java)
-- Memory: [Mem0, Qdrant](./ch04/python/mem0_chat) · [Cognee](./ch04/python/cognee_memory) · [OpenAI Agents SDK](./ch04/python/session_memory_chat) · [SQLite, FAISS](./ch04/python/memory_coach)
 
 ## Online resources
 
