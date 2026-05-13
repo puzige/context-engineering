@@ -13,7 +13,10 @@ limitations under the License.
 from anthropic import Anthropic
 
 
-def query_model(instructions: str | None, prompt: str, model: str = "claude-sonnet-4-20250514", temperature: float = 0) -> str:
+def query_model(instructions: str | None,
+                prompt: str,
+                model: str = "claude-sonnet-4-6",
+                temperature: float = 0) -> str:
     """Send a text prompt to an Anthropic model and return the text response."""
 
     client = Anthropic()  # ANTHROPIC_API_KEY should be set as an environment variable
@@ -39,15 +42,13 @@ if __name__ == "__main__":
     Always respond in one sentence and correct any mistakes.
     """
     prompt = "Explain me what is context engineering in simple words"
-    model = "claude-sonnet-4-20250514"
-    temperature = 0
 
     print("=== With system instructions ===")
-    response = query_model(instructions, prompt, model, temperature)
+    response = query_model(instructions, prompt)
     print("User query:", prompt)
     print("Response:", response)
 
     print("\n=== With only user prompt ===")
-    response = query_model(None, prompt, model, temperature)
+    response = query_model(None, prompt)
     print("User query:", prompt)
     print("Response:", response)

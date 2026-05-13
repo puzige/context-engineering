@@ -13,7 +13,10 @@ limitations under the License.
 from openai import OpenAI
 
 
-def query_model(instructions: str | None, prompt: str, model: str = "gpt-4o-mini", temperature: float = 0) -> str:
+def query_model(instructions: str | None,
+                prompt: str,
+                model: str = "gpt-4o-mini",
+                temperature: float = 0) -> str:
     """Send a text prompt to an OpenAI model and return the text response."""
 
     client = OpenAI()  # OPENAI_API_KEY should be set as an environment variable
