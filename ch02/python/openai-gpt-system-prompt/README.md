@@ -40,7 +40,7 @@ python openai-gpt-system-prompt.py
 When you run the script, it will send a system prompt and a user prompt to the model, which should provide a response:
 
 ```
-=== With system instructions ===
+=== With system prompt ===
 User query: Explain me what is context engineering in simple words
 Response: Explain to me what context engineering is in simple words.
 

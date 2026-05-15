@@ -34,7 +34,7 @@ async function queryModel(instructions, userPrompt, model = "gpt-4o-mini", tempe
 const instructions = "You are a strict grammar teacher. Always respond in one sentence and correct any mistakes.";
 const prompt = "Explain me what is context engineering in simple words";
 
-console.log("=== With system instructions ===");
+console.log("=== With system prompt ===");
 queryModel(instructions, prompt)
     .then(response => {
         console.log("User:", prompt);

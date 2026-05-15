@@ -64,7 +64,7 @@ public class GoogleGeminiSystemPrompt implements AutoCloseable {
 
             String response = demo.queryModel(Optional.of(instructions),
                     prompt);
-            System.out.println("=== With system instructions ===");
+            System.out.println("=== With system prompt ===");
             System.out.println("User query: " + prompt);
             System.out.println("Response: " + response);
 

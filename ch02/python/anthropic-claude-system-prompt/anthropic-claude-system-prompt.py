@@ -43,7 +43,7 @@ if __name__ == "__main__":
     """
     prompt = "Explain me what is context engineering in simple words"
 
-    print("=== With system instructions ===")
+    print("=== With system prompt ===")
     response = query_model(instructions, prompt)
     print("User query:", prompt)
     print("Response:", response)

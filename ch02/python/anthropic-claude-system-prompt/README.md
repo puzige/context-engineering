@@ -40,7 +40,7 @@ python anthropic-claude-system-prompt.py
 When you run the script, it will send a system prompt and a user prompt to the model, which should provide a response:
 
 ```
-=== With system instructions ===
+=== With system prompt ===
 User query: Explain me what is context engineering in simple words
 Response: "Please explain **to** me what context engineering is in simple words" — Context engineering is the practice of carefully designing and organizing the information you provide to an AI so that it fully understands the situation, rules, and goals needed to give you the best possible response.
 

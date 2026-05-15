@@ -35,7 +35,7 @@ python ollama-local-system-prompt.py
 When you run the script, it will send a system prompt and a user prompt to the model, which should provide a response:
 
 ```
-=== With system instructions ===
+=== With system prompt ===
         Model: gemma3:4b
         Latency: 8.842 seconds
         Input tokens: 45

@@ -29,7 +29,7 @@ npm start
 When you run the script, it will send a system prompt and a user prompt to the model, which should provide a response:
 
 ```
-=== With system instructions ===
+=== With system prompt ===
 User: Explain me what is context engineering in simple words
 AI: Explain to me what context engineering is in simple words.
 

@@ -114,7 +114,7 @@ public class OllamaLocalSystemPrompt {
         String prompt = "Explain me what is context engineering in simple words";
         double temperature = 0;
 
-        System.out.println("=== With system instructions ===");
+        System.out.println("=== With system prompt ===");
         String response = ollama.queryModel(instructions, prompt, temperature);
         System.out.println("User query: " + prompt);
         System.out.println("Response: " + response);

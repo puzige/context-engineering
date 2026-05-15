@@ -65,7 +65,7 @@ Always respond in one sentence and correct any mistakes.
 const prompt = 'Explain me what is context engineering in simple words';
 const temperature = 0;
 
-console.log('=== With system instructions ===');
+console.log('=== With system prompt ===');
 let response = await queryModel(instructions, prompt, ollamaModel, temperature);
 console.log('User query:', prompt);
 console.log('Response:', response);

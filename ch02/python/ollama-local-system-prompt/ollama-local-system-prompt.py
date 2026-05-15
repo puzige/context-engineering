@@ -63,15 +63,13 @@ if __name__ == "__main__":
     Always respond in one sentence and correct any mistakes.
     """
     prompt = "Explain me what is context engineering in simple words"
-    model = OLLAMA_MODEL
-    temperature = 0
 
-    print("=== With system instructions ===")
-    response = query_model(instructions, prompt, model, temperature)
+    print("=== With system prompt ===")
+    response = query_model(instructions, prompt)
     print("User query:", prompt)
     print("Response:", response)
 
     print("\n=== With only user prompt ===")
-    response = query_model(None, prompt, model, temperature)
+    response = query_model(None, prompt)
     print("User query:", prompt)
     print("Response:", response)
