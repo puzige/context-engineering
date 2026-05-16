@@ -58,8 +58,8 @@ This chapter explores different patterns for providing external knowledge to a m
  
 #### Chapter 4. Tools in AI agents
 This chapter focuses on extending the capabilities of AI agents through tools:
-- Function calling: [Python](./ch04/python/function_calling_time) · [JavaScript](./ch04/javascript/function_calling_time)
-- Model Context Protocol (MCP): [Python](./ch04/python/mcp_server) · [JavaScript](./ch04/javascript/mcp_server) · [Java](./ch04/java)
+- Function calling: [Python](./ch04/python/function_calling) · [JavaScript](./ch04/javascript/function_calling)
+- Model Context Protocol (MCP) server: [Python](./ch04/python/mcp_server) · [JavaScript](./ch04/javascript/mcp_server) · [Java](./ch04/java)
 
 ## Online resources
 
