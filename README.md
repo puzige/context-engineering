@@ -46,6 +46,8 @@ This chapter covers the definition and usage of instructions (system prompts, ag
 - System prompts (Anthropic): [Python](./ch02/python/anthropic-claude-system-prompt) · [Jupyter](./ch02/jupyter/anthropic_claude_system_prompt.ipynb) · [JavaScript](./ch02/javascript/anthropic-claude-system-prompt) · [Java](./ch02/java/src/main/java/io/github/bonigarcia/ce/AnthropicClaudeSystemPrompt.java)
 - System prompts (Google): [Python](./ch02/python/google-gemini-system-prompt) · [Jupyter](./ch02/jupyter/google_gemini_system_prompt.ipynb) · [JavaScript](./ch02/javascript/google-gemini-system-prompt) · [Java](./ch02/java/src/main/java/io/github/bonigarcia/ce/GoogleGeminiSystemPrompt.java)
 - System prompts (Ollama): [Python](./ch02/python/ollama-local-system-prompt) · [Jupyter](./ch02/jupyter/ollama_local_system_prompt.ipynb) · [JavaScript](./ch02/javascript/ollama-local-system-prompt) · [Java](./ch02/java/src/main/java/io/github/bonigarcia/ce/OllamaLocalSystemPrompt.java)
+- Agent skills: [project-notetaker](./ch02/agent-skills/project-notetaker)
+- Instruction artifacts: [task-tracker](./ch02/python/instruction-artifacts/task-tracker)
 
 #### Chapter 3. External knowledge and retrieval
 This chapter explores different patterns for providing external knowledge to a model:

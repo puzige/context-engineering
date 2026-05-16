@@ -14,6 +14,11 @@ This folder contains JavaScript examples for interacting with OpenAI, Anthropic,
 - `google-gemini-system-prompt/`: System prompt with Google Gemini models.
 - `ollama-local-system-prompt/`: System prompt with Ollama models.
 
+## Other instruction mechanisms
+
+- [Agent skills](../agent-skills/): Reusable packages of instructions and resources.
+- [Instruction artifacts](../python/instruction-artifacts/): Project-specific guidance files (e.g., `AGENTS.md`).
+
 ## Running the examples
 
 Each example is in its own folder and contains a `README.md` with instructions on how to run it.

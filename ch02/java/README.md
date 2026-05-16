@@ -15,6 +15,11 @@ This folder contains Java examples for interacting with OpenAI, Anthropic, and G
 - `GoogleGeminiSystemPrompt.java`: System prompt with Google Gemini models.
 - `OllamaLocalSystemPrompt.java`: System prompt with Ollama models.
 
+## Other instruction mechanisms
+
+- [Agent skills](../../agent-skills/): Reusable packages of instructions and resources.
+- [Instruction artifacts](../../python/instruction-artifacts/): Project-specific guidance files (e.g., `AGENTS.md`).
+
 ## Running the examples
 
 You can run each example using Maven:
