@@ -35,25 +35,25 @@ This repository organizes examples by chapter to help you explore context engine
 
 #### Chapter 1. Introduction to context engineering
 This chapter provides the foundations for interacting with different model providers:
-- Programmatic access to LLMs (OpenAI): [Python](./ch01/python/openai-gpt-basic) · [Jupyter](./ch01/jupyter/openai-gpt-basic.ipynb) · [JavaScript](./ch01/javascript/openai-gpt-basic) · [Java](./ch01/java/src/main/java/io/github/bonigarcia/ce/OpenAiGptBasic.java)
-- Programmatic access to LLMs (Anthropic): [Python](./ch01/python/anthropic-claude-basic) · [Jupyter](./ch01/jupyter/anthropic-claude-basic.ipynb) · [JavaScript](./ch01/javascript/anthropic-claude-basic) · [Java](./ch01/java/src/main/java/io/github/bonigarcia/ce/AnthropicClaudeBasic.java)
-- Programmatic access to LLMs (Google): [Python](./ch01/python/google-gemini-basic) · [Jupyter](./ch01/jupyter/google-gemini-basic.ipynb) · [JavaScript](./ch01/javascript/google-gemini-basic) · [Java](./ch01/java/src/main/java/io/github/bonigarcia/ce/GoogleGeminiBasic.java)
-- Programmatic access to LLMs (Ollama): [Python](./ch01/python/ollama-local-basic) · [Jupyter](./ch01/jupyter/ollama-local-basic.ipynb) · [JavaScript](./ch01/javascript/ollama-local-basic) · [Java](./ch01/java/src/main/java/io/github/bonigarcia/ce/OllamaLocalBasic.java)
+- Basic interaction (OpenAI): [Python](./ch01/python/openai-gpt-basic) · [Jupyter](./ch01/jupyter/openai-gpt-basic.ipynb) · [JavaScript](./ch01/javascript/openai-gpt-basic) · [Java](./ch01/java/src/main/java/io/github/bonigarcia/ce/OpenAiGptBasic.java)
+- Basic interaction (Anthropic): [Python](./ch01/python/anthropic-claude-basic) · [Jupyter](./ch01/jupyter/anthropic-claude-basic.ipynb) · [JavaScript](./ch01/javascript/anthropic-claude-basic) · [Java](./ch01/java/src/main/java/io/github/bonigarcia/ce/AnthropicClaudeBasic.java)
+- Basic interaction (Google): [Python](./ch01/python/google-gemini-basic) · [Jupyter](./ch01/jupyter/google-gemini-basic.ipynb) · [JavaScript](./ch01/javascript/google-gemini-basic) · [Java](./ch01/java/src/main/java/io/github/bonigarcia/ce/GoogleGeminiBasic.java)
+- Basic interaction (Ollama): [Python](./ch01/python/ollama-local-basic) · [Jupyter](./ch01/jupyter/ollama-local-basic.ipynb) · [JavaScript](./ch01/javascript/ollama-local-basic) · [Java](./ch01/java/src/main/java/io/github/bonigarcia/ce/OllamaLocalBasic.java)
 
 #### Chapter 2. Instructions in AI agents
-This chapter covers the definition and usage of the system instructions (system prompts, agent skills, and instructions artifacts) as a foundation layer to shape the model behavior:
-- Using system prompts (OpenAI): [Python](./ch02/python/openai-gpt-system-prompt) · [Jupyter](./ch02/jupyter/openai_gpt_system_prompt.ipynb) · [JavaScript](./ch02/javascript/openai-gpt-system-prompt) · [Java](./ch02/java/src/main/java/io/github/bonigarcia/ce/OpenAiGptSystemPrompt.java)
-- Using system prompts (Anthropic): [Python](./ch02/python/anthropic-claude-system-prompt) · [Jupyter](./ch02/jupyter/anthropic_claude_system_prompt.ipynb) · [JavaScript](./ch02/javascript/anthropic-claude-system-prompt) · [Java](./ch02/java/src/main/java/io/github/bonigarcia/ce/AnthropicClaudeSystemPrompt.java)
-- Using system prompts (Google): [Python](./ch02/python/google-gemini-system-prompt) · [Jupyter](./ch02/jupyter/google_gemini_system_prompt.ipynb) · [JavaScript](./ch02/javascript/google-gemini-system-prompt) · [Java](./ch02/java/src/main/java/io/github/bonigarcia/ce/GoogleGeminiSystemPrompt.java)
-- Using system prompts (Ollama): [Python](./ch02/python/ollama-local-system-prompt) · [Jupyter](./ch02/jupyter/ollama_local_system_prompt.ipynb) · [JavaScript](./ch02/javascript/ollama-local-system-prompt) · [Java](./ch02/java/src/main/java/io/github/bonigarcia/ce/OllamaLocalSystemPrompt.java)
+This chapter covers the definition and usage of instructions (system prompts, agent skills, instructions artifacts) as a foundation layer to shape the model behavior:
+- System prompts (OpenAI): [Python](./ch02/python/openai-gpt-system-prompt) · [Jupyter](./ch02/jupyter/openai_gpt_system_prompt.ipynb) · [JavaScript](./ch02/javascript/openai-gpt-system-prompt) · [Java](./ch02/java/src/main/java/io/github/bonigarcia/ce/OpenAiGptSystemPrompt.java)
+- System prompts (Anthropic): [Python](./ch02/python/anthropic-claude-system-prompt) · [Jupyter](./ch02/jupyter/anthropic_claude_system_prompt.ipynb) · [JavaScript](./ch02/javascript/anthropic-claude-system-prompt) · [Java](./ch02/java/src/main/java/io/github/bonigarcia/ce/AnthropicClaudeSystemPrompt.java)
+- System prompts (Google): [Python](./ch02/python/google-gemini-system-prompt) · [Jupyter](./ch02/jupyter/google_gemini_system_prompt.ipynb) · [JavaScript](./ch02/javascript/google-gemini-system-prompt) · [Java](./ch02/java/src/main/java/io/github/bonigarcia/ce/GoogleGeminiSystemPrompt.java)
+- System prompts (Ollama): [Python](./ch02/python/ollama-local-system-prompt) · [Jupyter](./ch02/jupyter/ollama_local_system_prompt.ipynb) · [JavaScript](./ch02/javascript/ollama-local-system-prompt) · [Java](./ch02/java/src/main/java/io/github/bonigarcia/ce/OllamaLocalSystemPrompt.java)
 
 #### Chapter 3. External knowledge and retrieval
-This chapter explores different patterns for providing external knowledge to the model. It covers Retrieval-Augmented Generation (RAG) using different retrievers and models, Cache-Augmented Generation (CAG), and context stuffing (injecting data directly into the prompt):
+This chapter explores different patterns for providing external knowledge to a model. It covers Retrieval-Augmented Generation (RAG) using different retrievers and models, Cache-Augmented Generation (CAG), and context stuffing (injecting data directly into the context window):
 - Basic RAG: [Python](./ch03/python/rag-openai) · [Jupyter](./ch03/jupyter/rag_openai.ipynb)
 - CAG: [Python](./ch03/python/cag) · [Jupyter](./ch03/jupyter/cag.ipynb)
 - Context stuffing: [Python](./ch03/python/context-stuffing-system-prompt) · [Jupyter](./ch03/jupyter/context_stuffing_system_prompt.ipynb)
 - Advanced RAG: [LangChain](./ch03/python/agentic-rag) · [Qdrant](./ch03/python/local-rag) · [PageIndex](./ch03/python/vectorless-rag-pageindex) · [RAGFlow](./ch03/python/ragflow-basic)
-- 
+ 
 #### Chapter 4. Tools in AI agents
 This chapter focuses on extending AI capabilities through tools and memory. It covers tool use (function calling), the Model Context Protocol (MCP) for standardized tool integration, and various memory patterns to maintain context over time:
 - Function calling: [Python](./ch04/python/function_calling_time) · [JavaScript](./ch04/javascript/function_calling_time)
