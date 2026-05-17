@@ -29,7 +29,6 @@ public class AnthropicClaudeSystemPrompt implements AutoCloseable {
 
     AnthropicClient client;
     Model model;
-    double temperature;
 
     public AnthropicClaudeSystemPrompt(Model model) {
         this.model = model;

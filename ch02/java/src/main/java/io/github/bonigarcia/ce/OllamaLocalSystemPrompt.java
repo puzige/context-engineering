@@ -45,12 +45,11 @@ public class OllamaLocalSystemPrompt {
         this.model = model;
     }
 
-    public String queryModel(String instructions, String prompt,
-            double temperature) throws IOException, InterruptedException {
+    public String queryModel(String instructions, String prompt)
+            throws IOException, InterruptedException {
         ObjectNode payload = mapper.createObjectNode();
         payload.put("model", model);
         payload.put("stream", false);
-        payload.putObject("options").put("temperature", temperature);
 
         ArrayNode messages = payload.putArray("messages");
         if (instructions != null && !instructions.isBlank()) {
@@ -112,15 +111,14 @@ public class OllamaLocalSystemPrompt {
                 Always respond in one sentence and correct any mistakes.
                 """;
         String prompt = "Explain me what is context engineering in simple words";
-        double temperature = 0;
 
         System.out.println("=== With system prompt ===");
-        String response = ollama.queryModel(instructions, prompt, temperature);
+        String response = ollama.queryModel(instructions, prompt);
         System.out.println("User query: " + prompt);
         System.out.println("Response: " + response);
 
         System.out.println("\n=== With only user prompt ===");
-        response = ollama.queryModel(null, prompt, temperature);
+        response = ollama.queryModel(null, prompt);
         System.out.println("User query: " + prompt);
         System.out.println("Response: " + response);
     }

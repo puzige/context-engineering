@@ -28,19 +28,16 @@ public class GoogleGeminiSystemPrompt implements AutoCloseable {
 
     Client client;
     String model;
-    float temperature;
 
-    public GoogleGeminiSystemPrompt(String model, float temperature) {
+    public GoogleGeminiSystemPrompt(String model) {
         this.model = model;
-        this.temperature = temperature;
 
         // GOOGLE_API_KEY should be set as an environment variable
         client = new Client();
     }
 
     String queryModel(Optional<String> instructions, String prompt) {
-        GenerateContentConfig.Builder builder = GenerateContentConfig.builder()
-                .temperature(temperature);
+        GenerateContentConfig.Builder builder = GenerateContentConfig.builder();
         instructions.ifPresent(i -> builder
                 .systemInstruction(Content.fromParts(Part.fromText(i))));
         GenerateContentResponse response = client.models.generateContent(model,
@@ -55,7 +52,7 @@ public class GoogleGeminiSystemPrompt implements AutoCloseable {
 
     public static void main(String[] args) {
         try (GoogleGeminiSystemPrompt demo = new GoogleGeminiSystemPrompt(
-                "gemini-2.5-flash", 0)) {
+                "gemini-2.5-flash")) {
             String instructions = """
                     You are a strict grammar teacher.
                     Always respond in one sentence and correct any mistakes.

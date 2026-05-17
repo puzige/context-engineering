@@ -15,7 +15,7 @@ import { performance } from 'node:perf_hooks';
 const ollamaHost = process.env.OLLAMA_HOST || 'http://localhost:11434';
 const ollamaModel = process.env.OLLAMA_MODEL || 'gemma3:4b';
 
-async function queryModel(instructions, prompt, model = ollamaModel, temperature = 0) {
+async function queryModel(instructions, prompt, model = ollamaModel) {
     const messages = [];
     if (instructions) {
         messages.push({ role: 'system', content: instructions });
@@ -26,9 +26,6 @@ async function queryModel(instructions, prompt, model = ollamaModel, temperature
         model: model,
         messages: messages,
         stream: false,
-        options: {
-            temperature: temperature,
-        },
     };
 
     const start = performance.now();
@@ -63,14 +60,13 @@ You are a strict grammar teacher.
 Always respond in one sentence and correct any mistakes.
 `;
 const prompt = 'Explain me what is context engineering in simple words';
-const temperature = 0;
 
 console.log('=== With system prompt ===');
-let response = await queryModel(instructions, prompt, ollamaModel, temperature);
+let response = await queryModel(instructions, prompt, ollamaModel);
 console.log('User query:', prompt);
 console.log('Response:', response);
 
 console.log('\n=== With only user prompt ===');
-response = await queryModel(null, prompt, ollamaModel, temperature);
+response = await queryModel(null, prompt, ollamaModel);
 console.log('User query:', prompt);
 console.log('Response:', response);

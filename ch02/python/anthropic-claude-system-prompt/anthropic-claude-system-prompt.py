@@ -15,8 +15,7 @@ from anthropic import Anthropic
 
 def query_model(instructions: str | None,
                 prompt: str,
-                model: str = "claude-sonnet-4-6",
-                temperature: float = 0) -> str:
+                model: str = "claude-sonnet-4-6") -> str:
     """Send a text prompt to an Anthropic model and return the text response."""
 
     client = Anthropic()  # ANTHROPIC_API_KEY should be set as an environment variable
@@ -24,7 +23,6 @@ def query_model(instructions: str | None,
     params = {
         "model": model,
         "max_tokens": 1024,
-        "temperature": temperature,
         "messages": [
             {"role": "user", "content": prompt}
         ]

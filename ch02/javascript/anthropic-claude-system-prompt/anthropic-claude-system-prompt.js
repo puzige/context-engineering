@@ -12,14 +12,13 @@ limitations under the License.
 */
 import Anthropic from '@anthropic-ai/sdk';
 
-async function queryModel(instructions, userPrompt, model = "claude-sonnet-4-6", temperature = 0) {
+async function queryModel(instructions, userPrompt, model = "claude-sonnet-4-6") {
     //  ANTHROPIC_API_KEY should be set as an environment variable
     const client = new Anthropic();
 
     const params = {
         model: model,
         max_tokens: 1024,
-        temperature: temperature,
         messages: [
             { role: "user", content: userPrompt }
         ]

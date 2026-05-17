@@ -15,8 +15,7 @@ from openai import OpenAI
 
 def query_model(instructions: str | None,
                 prompt: str,
-                model: str = "gpt-4o-mini",
-                temperature: float = 0) -> str:
+                model: str = "gpt-4o-mini") -> str:
     """Send a text prompt to an OpenAI model and return the text response."""
 
     client = OpenAI()  # OPENAI_API_KEY should be set as an environment variable
@@ -29,7 +28,6 @@ def query_model(instructions: str | None,
     response = client.chat.completions.create(
         model=model,
         messages=messages,
-        temperature=temperature,
     )
     return response.choices[0].message.content
 

@@ -12,13 +12,12 @@ limitations under the License.
 */
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-async function queryModel(instructions, userPrompt, modelName = "gemini-2.0-flash", temperature = 0) {
+async function queryModel(instructions, userPrompt, modelName = "gemini-2.0-flash") {
     // GOOGLE_API_KEY should be set as an environment variable
     const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
     const config = {
         model: modelName,
         generationConfig: {
-            temperature: temperature,
         }
     };
     if (instructions) {

@@ -21,8 +21,7 @@ OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "gemma3:4b")
 
 def query_model(instructions: str | None,
                 prompt: str,
-                model: str = OLLAMA_MODEL,
-                temperature: float = 0) -> str:
+                model: str = OLLAMA_MODEL) -> str:
     """Send a system instruction and a user prompt to a local LLM running through Ollama."""
     messages = []
     if instructions:
@@ -33,9 +32,6 @@ def query_model(instructions: str | None,
         "model": model,
         "messages": messages,
         "stream": False,
-        "options": {
-            "temperature": temperature,
-        },
     }
 
     start = time.perf_counter()

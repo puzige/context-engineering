@@ -12,7 +12,7 @@ limitations under the License.
 */
 import OpenAI from 'openai';
 
-async function queryModel(instructions, userPrompt, model = "gpt-4o-mini", temperature = 0) {
+async function queryModel(instructions, userPrompt, model = "gpt-4o-mini") {
     // OPENAI_API_KEY should be set as an environment variable
     const client = new OpenAI();
 
@@ -25,7 +25,6 @@ async function queryModel(instructions, userPrompt, model = "gpt-4o-mini", tempe
     const response = await client.chat.completions.create({
         model: model,
         messages: messages,
-        temperature: temperature,
     });
 
     return response.choices[0].message.content;

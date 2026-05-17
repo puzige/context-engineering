@@ -29,11 +29,9 @@ public class OpenAiGptSystemPrompt implements AutoCloseable {
 
     OpenAIClient client;
     ChatModel model;
-    double temperature;
 
-    public OpenAiGptSystemPrompt(ChatModel model, float temperature) {
+    public OpenAiGptSystemPrompt(ChatModel model) {
         this.model = model;
-        this.temperature = temperature;
 
         // OPENAI_API_KEY should be set as an environment variable
         client = OpenAIOkHttpClient.fromEnv();
@@ -55,7 +53,7 @@ public class OpenAiGptSystemPrompt implements AutoCloseable {
 
     public static void main(String[] args) {
         try (OpenAiGptSystemPrompt demo = new OpenAiGptSystemPrompt(
-                ChatModel.GPT_4_1_MINI, 0)) {
+                ChatModel.GPT_4_1_MINI)) {
             String instructions = """
                     You are a strict grammar teacher.
                     Always respond in one sentence and correct any mistakes.
