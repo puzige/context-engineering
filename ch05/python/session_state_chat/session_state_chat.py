@@ -56,13 +56,21 @@ def _extract_topic(text: str) -> str:
     return words[0].lower()
 
 
+def _looks_like_new_goal(text: str) -> bool:
+    lower = text.lower()
+    return any(token in lower for token in ("instead", "switch to", "change to", "new task", "new goal", "actually"))
+
+
 def update_state(state: SessionState, user_text: str, assistant_text: str) -> None:
     state.turn_count += 1
     state.last_user_message = user_text
     state.last_assistant_message = assistant_text
 
-    if not state.goal.strip():
+    if not state.goal.strip() or _looks_like_new_goal(user_text):
         state.goal = user_text.strip()
+        state.topic = _extract_topic(user_text)
+        state.constraints.clear()
+        state.open_questions.clear()
 
     lower = user_text.lower()
     if any(token in lower for token in ("plan", "outline", "roadmap")):

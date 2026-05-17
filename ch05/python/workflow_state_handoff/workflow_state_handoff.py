@@ -158,7 +158,9 @@ def apply_executor_result(state: WorkflowState, payload: Dict[str, Any]) -> None
         state.executor_notes = completed_step
         state.handoff_log.append(f"executor: {completed_step}")
     blockers = _ensure_list(payload.get("blockers"))
-    state.blockers = blockers
+    if blockers:
+        merged_blockers = list(dict.fromkeys(state.blockers + blockers))
+        state.blockers = merged_blockers
     if state.plan and state.current_step < len(state.plan):
         state.current_step += 1
     next_step = str(payload.get("next_step", "")).strip()

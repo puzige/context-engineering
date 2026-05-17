@@ -5,7 +5,7 @@ This example demonstrates how to set up [Cognee](https://cognee.ai/) to build a 
 ## Requirements
 
 * [Python](https://www.python.org/) 3.10+
-* An [OpenAI API key](https://platform.openai.com/api-keys) (used by default by Cognee)
+* A model API key exposed as `LLM_API_KEY` (for example, an [OpenAI API key](https://platform.openai.com/api-keys))
 
 ## Steps for running this example in the shell
 
@@ -25,7 +25,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-2. Export your OpenAI API key as an environment variable:
+2. Export your model API key as an environment variable:
 ```bash
 export LLM_API_KEY="sk-..." # Windows cmd: set LLM_API_KEY="sk-..." # Windows PowerShell: $env:LLM_API_KEY="sk-..."
 ```
