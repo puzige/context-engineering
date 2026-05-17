@@ -1,4 +1,4 @@
-# Function calling: current time
+# Function calling
 
 This example demonstrates the *function-calling* pattern using an [OpenAI](https://openai.com/) GPT model in JavaScript. In this pattern, the model can call external functions to get information. The loop is in the smallest useful form: the model decides when it needs external data, calls a function, and then uses the function result to answer.
 
@@ -26,10 +26,10 @@ npm start
 
 ## Output
 
-When you run the script, it will send a fixed user prompt (`What time is it right now?`) to a GPT model (`gpt-4o-mini`). The model will determine that it needs to call the `get_current_time` function to answer the question, and it will do so with the specified format. The application will execute the function, get the current time, and inject it back into the conversation as a `function_call_output` item. Finally, the model will produce a user-facing answer grounded in the tool result.
+When you run the script, it will send a fixed user prompt (`What is the weather in San Francisco?`) to a GPT model (`gpt-4o-mini`). The model will determine that it needs to call the `get_weather` function to answer the question, and it will do so with the requested location. The application will execute the function, get the weather, and inject it back into the conversation as a `function_call_output` item. Finally, the model will produce a user-facing answer grounded in the tool result.
 
 ```
-User: What time is it right now?
-        Tool requested: get_current_time({"format":"%Y-%m-%d %H:%M:%S"})
-Assistant: The current time is 2026-03-25 19:17:32.
+User: What is the weather in San Francisco?
+        Tool requested: get_weather({"location":"San Francisco"})
+Assistant: The current weather in San Francisco is sunny with a temperature of 18°C and a humidity level of 63%.
 ```

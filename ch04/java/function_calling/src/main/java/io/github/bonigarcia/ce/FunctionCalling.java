@@ -20,35 +20,54 @@ import com.openai.models.ChatModel;
 import com.openai.models.responses.ResponseCreateParams;
 import com.openai.models.responses.ResponseFunctionToolCall;
 import com.openai.models.responses.ResponseInputItem;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class FunctionCalling {
 
-    private static final String DEFAULT_FORMAT = "yyyy-MM-dd HH:mm:ss";
-
     private FunctionCalling() {
     }
 
-    @JsonClassDescription("Gets the current system time.")
-    static class GetCurrentTime {
+    @JsonClassDescription("Gets the current weather in a location.")
+    static class GetWeather {
 
-        @JsonPropertyDescription("Java date format pattern (optional).")
-        public String format;
+        @JsonPropertyDescription("Location to look up.")
+        public String location;
 
-        public String execute() {
-            String pattern = (format == null || format.isBlank()) ? DEFAULT_FORMAT : format;
-            return LocalDateTime.now().format(DateTimeFormatter.ofPattern(pattern));
+        public Map<String, Object> execute() {
+            String key = location.trim().toLowerCase();
+
+            return switch (key) {
+                case "san francisco" -> Map.of(
+                        "location", "San Francisco",
+                        "temperature_c", 18,
+                        "condition", "Sunny",
+                        "humidity_percent", 63);
+                case "new york" -> Map.of(
+                        "location", "New York",
+                        "temperature_c", 12,
+                        "condition", "Cloudy",
+                        "humidity_percent", 71);
+                case "london" -> Map.of(
+                        "location", "London",
+                        "temperature_c", 10,
+                        "condition", "Light rain",
+                        "humidity_percent", 82);
+                default -> Map.of(
+                        "location", location,
+                        "temperature_c", 21,
+                        "condition", "Unknown (demo data)",
+                        "humidity_percent", 50);
+            };
         }
     }
 
     public static void main(String[] args) {
         OpenAIClient client = OpenAIOkHttpClient.fromEnv();
 
-        String prompt = "What time is it right now?";
+        String prompt = "What is the weather in San Francisco?";
         System.out.println("User: " + prompt);
 
         List<ResponseInputItem> inputs = new ArrayList<>();
@@ -60,7 +79,7 @@ public final class FunctionCalling {
         ResponseCreateParams.Builder createParamsBuilder = ResponseCreateParams.builder()
                 .model(ChatModel.GPT_4O_MINI)
                 .maxOutputTokens(2048)
-                .addTool(GetCurrentTime.class)
+                .addTool(GetWeather.class)
                 .input(ResponseCreateParams.Input.ofResponse(inputs));
 
         client.responses().create(createParamsBuilder.build()).output().forEach(item -> {
@@ -89,11 +108,11 @@ public final class FunctionCalling {
         System.out.println("Assistant: " + answer);
     }
 
-    private static String callFunction(ResponseFunctionToolCall function) {
-        if (!function.name().equals("GetCurrentTime")) {
+    private static Map<String, Object> callFunction(ResponseFunctionToolCall function) {
+        if (!function.name().equals("GetWeather")) {
             throw new IllegalArgumentException("Unknown function: " + function.name());
         }
 
-        return function.arguments(GetCurrentTime.class).execute();
+        return function.arguments(GetWeather.class).execute();
     }
 }

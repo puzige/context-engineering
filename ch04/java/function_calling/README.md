@@ -1,4 +1,4 @@
-# Function calling: current time
+# Function calling
 
 This example demonstrates the *function-calling* pattern using an [OpenAI](https://openai.com/) GPT model in Java. In this pattern, the model can call external functions to get information. The loop is in the smallest useful form: the model decides when it needs external data, calls a function, and then uses the function result to answer.
 
@@ -27,10 +27,10 @@ mvn -q exec:java
 
 ## Output
 
-When you run the script, it will send a fixed user prompt (`What time is it right now?`) to a GPT model (`gpt-4o-mini`). The model will determine that it needs to call the `GetCurrentTime` function to answer the question, and it will do so with the specified format. The application will execute the function and then send the result back to the model. Finally, the model will produce a user-facing answer grounded in the tool result.
+When you run the script, it will send a fixed user prompt (`What is the weather in San Francisco?`) to a GPT model (`gpt-4o-mini`). The model will determine that it needs to call the `GetWeather` function to answer the question, and it will do so with the requested location. The application will execute the function and then send the result back to the model. Finally, the model will produce a user-facing answer grounded in the tool result.
 
 ```
-User: What time is it right now?
-	Tool requested: GetCurrentTime({"format":"yyyy-MM-dd HH:mm:ss"})
-Assistant: The current time is 2026-03-25 18:50:27.
+User: What is the weather in San Francisco?
+	Tool requested: GetWeather({"location":"San Francisco"})
+Assistant: The current weather in San Francisco is sunny with a temperature of 18°C and a humidity level of 63%.
 ```

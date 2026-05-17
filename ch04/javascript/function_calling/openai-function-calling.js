@@ -14,38 +14,55 @@ import OpenAI from 'openai';
 
 const client = new OpenAI();
 
-function formatCurrentTime(date, format) {
-    if (format === '%Y-%m-%d %H:%M:%S') {
-        const pad = (value) => String(value).padStart(2, '0');
-        return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} `
-            + `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
-    }
+function getWeather(location) {
+    const weatherDb = {
+        'san francisco': {
+            location: 'San Francisco',
+            temperature_c: 18,
+            condition: 'Sunny',
+            humidity_percent: 63,
+        },
+        'new york': {
+            location: 'New York',
+            temperature_c: 12,
+            condition: 'Cloudy',
+            humidity_percent: 71,
+        },
+        london: {
+            location: 'London',
+            temperature_c: 10,
+            condition: 'Light rain',
+            humidity_percent: 82,
+        },
+    };
 
-    return date.toLocaleString('en-GB', { hour12: false }).replace(',', '');
-}
-
-function getCurrentTime({ format } = {}) {
-    return formatCurrentTime(new Date(), format);
+    const key = location.trim().toLowerCase();
+    return weatherDb[key] ?? {
+        location,
+        temperature_c: 21,
+        condition: 'Unknown (demo data)',
+        humidity_percent: 50,
+    };
 }
 
 const TOOLS = [{
     "type": "function",
-    "name": "get_current_time",
-    "description": "Get the current system time.",
+    "name": "get_weather",
+    "description": "Get the current weather in a location.",
     "parameters": {
         "type": "object",
         "properties": {
-            "format": {
+            "location": {
                 "type": "string",
-                "description": "Optional date format string."
+                "description": "Location to look up."
             }
         },
-        "required": []
+        "required": ["location"]
     }
 }];
 
 const FUNCTIONS = {
-    "get_current_time": getCurrentTime
+    "get_weather": ({ location }) => getWeather(location)
 };
 
 async function queryModel(prompt, model = "gpt-4o-mini") {
@@ -74,7 +91,7 @@ async function queryModel(prompt, model = "gpt-4o-mini") {
             outputs.push({
                 "type": "function_call_output",
                 "call_id": call.call_id,
-                "output": result,
+                "output": JSON.stringify(result),
             });
         }
 
@@ -87,7 +104,7 @@ async function queryModel(prompt, model = "gpt-4o-mini") {
     }
 }
 
-const prompt = "What time is it right now?";
+const prompt = "What is the weather in San Francisco?";
 console.log("User:", prompt);
 const response = await queryModel(prompt);
 console.log("Assistant:", response);
