@@ -31,9 +31,8 @@ public class AnthropicClaudeSystemPrompt implements AutoCloseable {
     Model model;
     double temperature;
 
-    public AnthropicClaudeSystemPrompt(Model model, double temperature) {
+    public AnthropicClaudeSystemPrompt(Model model) {
         this.model = model;
-        this.temperature = temperature;
 
         // ANTHROPIC_API_KEY should be set as an environment variable
         client = AnthropicOkHttpClient.fromEnv();
@@ -41,8 +40,7 @@ public class AnthropicClaudeSystemPrompt implements AutoCloseable {
 
     String queryModel(Optional<String> instructions, String prompt) {
         MessageCreateParams.Builder builder = MessageCreateParams.builder()
-                .maxTokens(1024L).addUserMessage(prompt).model(model)
-                .temperature(temperature);
+                .maxTokens(1024L).addUserMessage(prompt).model(model);
         instructions.ifPresent(builder::system);
         Message response = client.messages().create(builder.build());
 
@@ -59,7 +57,7 @@ public class AnthropicClaudeSystemPrompt implements AutoCloseable {
 
     public static void main(String[] args) {
         try (AnthropicClaudeSystemPrompt demo = new AnthropicClaudeSystemPrompt(
-                Model.CLAUDE_SONNET_4_20250514, 0)) {
+                Model.CLAUDE_SONNET_4_6)) {
             String instructions = """
                     You are a strict grammar teacher.
                     Always respond in one sentence and correct any mistakes.
