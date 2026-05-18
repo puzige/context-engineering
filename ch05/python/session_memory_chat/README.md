@@ -10,11 +10,21 @@ This example demonstrates short-term memory management using the OpenAI Agents S
 - Python 3.10+
 - An OpenAI API key (exported as `OPENAI_API_KEY` env variable)
 
-## Install
+## Steps for running this example in the shell
 
+1.  Install dependencies:
 ```bash
 python -m venv .venv
-source .venv/bin/activate  # Windows cmd: .venv\Scripts\activate # Windows PowerShell: .venv\Scripts\Activate.ps1
+
+# macOS/Linux:
+source .venv/bin/activate
+
+# Windows Command Prompt:
+.venv\Scripts\activate.bat
+
+# Windows PowerShell:
+.venv\Scripts\Activate.ps1
+
 pip install -r requirements.txt
 ```
 
@@ -28,7 +38,7 @@ REFRESH_EVERY=4
 SESSION_ID=support_demo
 ```
 
-## Run
+2. Run the script:
 
 ### Trimming strategy (fast, deterministic)
 

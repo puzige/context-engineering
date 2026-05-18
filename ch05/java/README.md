@@ -1,6 +1,6 @@
-# Chapter 5 Java examples
+# Memory and state examples
 
-This folder contains Java ports of the easier Chapter 5 examples.
+This folder contains some Java examples about Chapter 5 (Memory and state in agentic systems).
 
 ## Requirements
 
