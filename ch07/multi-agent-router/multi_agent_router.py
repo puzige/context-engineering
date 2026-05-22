@@ -1,3 +1,15 @@
+"""
+(C) Copyright 2026 Boni Garcia (https://bonigarcia.github.io/)
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+"""
 import os
 from typing import TypedDict, Annotated, List
 from langchain_core.messages import BaseMessage, HumanMessage
@@ -14,9 +26,11 @@ api_key = os.getenv("OPENAI_API_KEY")
 if not api_key:
     raise ValueError("OPENAI_API_KEY not found in .env file")
 
+
 # Define the state for our graph
 class AgentState(TypedDict):
     messages: Annotated[List[BaseMessage], lambda x, y: x + y]
+
 
 class MultiAgentRouter:
     def __init__(self, llm):
@@ -30,7 +44,8 @@ class MultiAgentRouter:
         # 2. Define the nodes
         workflow.add_node("router", self.router_node)
         workflow.add_node("sales_agent", self.create_agent_node("You are a helpful sales assistant."))
-        workflow.add_node("tech_support_agent", self.create_agent_node("You are a helpful technical support assistant."))
+        workflow.add_node("tech_support_agent",
+                          self.create_agent_node("You are a helpful technical support assistant."))
         workflow.add_node("general_agent", self.create_agent_node("You are a helpful general assistant."))
 
         # 3. Define the edges
@@ -47,7 +62,7 @@ class MultiAgentRouter:
         workflow.add_edge("sales_agent", END)
         workflow.add_edge("tech_support_agent", END)
         workflow.add_edge("general_agent", END)
-        
+
         # 4. Compile the graph
         return workflow.compile()
 
@@ -61,12 +76,13 @@ class MultiAgentRouter:
             template="{system_prompt}\n\nUser Question: {question}",
             input_variables=["system_prompt", "question"],
         )
+
         def agent_node(state):
             last_message = state["messages"][-1].content
-            
+
             # Invoke the LLM with the specific persona
             response = self.llm.invoke(prompt.format(system_prompt=system_prompt, question=last_message))
-            
+
             return {"messages": [response]}
 
         return agent_node
@@ -74,7 +90,7 @@ class MultiAgentRouter:
     def route_question(self, state):
         """The router function to decide which agent to route to."""
         last_message = state["messages"][-1].content
-        
+
         routing_prompt = f"""You are an expert at routing customer questions.
         Classify the user's question into one of the following categories: 'sales', 'tech_support', or 'general'.
         
@@ -82,7 +98,7 @@ class MultiAgentRouter:
         "{last_message}"
         
         Classification:"""
-        
+
         response = self.llm.invoke(routing_prompt)
         # The response will be just the category name, e.g., "sales"
         route = response.content.strip().lower()
@@ -99,6 +115,7 @@ class MultiAgentRouter:
         initial_state = {"messages": [HumanMessage(content=question)]}
         final_state = self.graph.invoke(initial_state)
         return final_state['messages'][-1].content
+
 
 if __name__ == "__main__":
     # Initialize the LLM

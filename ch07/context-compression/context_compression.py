@@ -1,3 +1,15 @@
+"""
+(C) Copyright 2026 Boni Garcia (https://bonigarcia.github.io/)
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+"""
 import os
 from dotenv import load_dotenv
 
@@ -18,7 +30,8 @@ def build_sample_conversation() -> str:
         ("Assistant", "Sure—can you share the order number and what seems to be the issue?"),
         ("User", "Order #A-10492. I ordered a NoiseCancel Pro headset and a USB-C dock."),
         ("Assistant", "Thanks. What’s the shipping address and preferred delivery instructions?"),
-        ("User", "Ship to: John Smith, Calle de Alcalá 123, 28009 Madrid, Spain. Leave with the concierge if I'm not home."),
+        ("User",
+         "Ship to: John Smith, Calle de Alcalá 123, 28009 Madrid, Spain. Leave with the concierge if I'm not home."),
         ("Assistant", "Understood. Any issues with the items or the delivery timeline?"),
         ("User", "The dock arrived, but the headset didn’t. Tracking says delivered yesterday."),
         ("Assistant", "Sorry to hear that. Can you confirm the last four digits of the phone number on the order?"),
@@ -29,13 +42,15 @@ def build_sample_conversation() -> str:
         ("User", "Yes, require signature. And please send updates to john@example.com."),
         ("Assistant", "Done. Anything else?"),
         ("User", "One more thing—if the headset can’t be shipped within 3 business days, switch to refund."),
-        ("Assistant", "Confirmed: replacement preferred; refund if not shipped within 3 business days. Signature required."),
+        ("Assistant",
+         "Confirmed: replacement preferred; refund if not shipped within 3 business days. Signature required."),
         ("User", "By the way, I love your products. I’ve bought several items over the years. "
                  "The dock is great, super fast, and the packaging was nice. "
                  "I’m just worried someone took the headset package."),
         ("Assistant", "Thanks for the feedback. We’ll investigate delivery details with the carrier."),
         ("User", "Also, could you remind me of the return policy? Not urgent, just curious."),
-        ("Assistant", "Return policy is 30 days for most items in original condition. For now, I’ll prioritize the missing headset."),
+        ("Assistant",
+         "Return policy is 30 days for most items in original condition. For now, I’ll prioritize the missing headset."),
     ]
 
     # Format into a single “conversation history” context block
