@@ -1,6 +1,6 @@
 # Context compression with LLMLingua
 
-This example demonstrates the concept of **Context Compression** using the `LLMLingua` library. It shows how to compress a long conversation history to reduce its token count while preserving essential semantic information.
+This example demonstrates the concept of **Context Compression** using the `LLMLingua` library. It shows how to compress a long conversation history to reduce its token count while preserving essential semantic information and verifying that sentinel facts survive.
 
 ## Requirements
 
@@ -42,5 +42,6 @@ When you run the script, it will:
 
 1. Print the original word count of the sample conversation.
 2. Display the compressed version of the context and its new, lower word count.
-3. Use the compressed context to ask a question to an LLM.
-4. Print the final answer from the LLM, demonstrating that the key information was successfully retained during compression.
+3. Verify that the sentinel facts still exist after compression.
+4. Use the compressed context to ask a question to an LLM.
+5. Print the final answer from the LLM, demonstrating that the key information was successfully retained during compression.

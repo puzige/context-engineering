@@ -87,6 +87,16 @@ def main():
     else:
         compressed_text = str(compressed)
 
+    required_facts = [
+        "Order #A-10492",
+        "Calle de Alcalá 123",
+        "replacement preferred",
+        "signature required",
+    ]
+    for fact in required_facts:
+        if fact.lower() not in compressed_text.lower():
+            raise AssertionError(f"Missing sentinel fact after compression: {fact}")
+
     compressed_wc = word_count(compressed_text)
 
     print("\n--- Compressed Context (LLMLingua) ---")
