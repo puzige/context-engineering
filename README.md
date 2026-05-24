@@ -93,8 +93,8 @@ This chapter covers evaluation and observability for context-aware systems:
 - Metrics (DeepEval): [Python](./ch08/metrics-deepeval)
 - Evals (Promptfoo): [YAML](./ch08/evals-promptfoo)
 - LLM-as-judge (Ragas): [Python](./ch08/llm-as-judge-ragas)
-- Observability (LangSmith): [Python](./ch08/observability-langsmith)
 - Observability (Langfuse): [Python](./ch08/observability-langfuse)
+- Observability (LangSmith): [Python](./ch08/observability-langsmith)
 
 ## Online resources
 
