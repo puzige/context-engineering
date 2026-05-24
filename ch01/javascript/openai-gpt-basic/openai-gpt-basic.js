@@ -53,9 +53,9 @@ const userPrompt = "How many tokens is your context window?";
 console.log("=== Basic model  ===");
 console.log("User:", userPrompt);
 var response = await queryModel(userPrompt);
-console.log("GPT4:", response);
+console.log("AI:", response);
 
 console.log("=== Advanced model  ===");
 console.log("User:", userPrompt);
 response = await queryModel(userPrompt, "gpt-5", 1024, 0, "medium");
-console.log("GPT5:", response);
+console.log("AI:", response);

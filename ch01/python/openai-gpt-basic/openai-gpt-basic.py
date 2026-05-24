@@ -59,9 +59,9 @@ if __name__ == "__main__":
     print("=== Basic model ===")
     print("User:", prompt)
     response = query_model(prompt)
-    print("GPT4:", response)
+    print("AI:", response)
 
     print("=== Advanced model ===")
     print("User:", prompt)
     response = query_model(prompt, model="gpt-5", reasoning="medium")
-    print("GPT5:", response)
+    print("AI:", response)

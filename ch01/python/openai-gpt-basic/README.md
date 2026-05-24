@@ -48,7 +48,7 @@ User: How many tokens is your context window?
         Output tokens: 39
         Reasoning tokens: 0
         Total tokens: 54
-GPT4: My context window can handle up to 8,192 tokens. This includes both the input and the output tokens. If you have any specific questions or need assistance, feel free to ask!
+AI: My context window can handle up to 8,192 tokens. This includes both the input and the output tokens. If you have any specific questions or need assistance, feel free to ask!
 
 === Advanced model  ===
 User: How many tokens is your context window?
@@ -58,5 +58,5 @@ User: How many tokens is your context window?
         Output tokens: 544
         Reasoning tokens: 512
         Total tokens: 558
-GPT5: About 128,000 tokens total (input + output combined).
+AI: About 128,000 tokens total (input + output combined).
 ```
