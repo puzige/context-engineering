@@ -1,6 +1,6 @@
 # PII redaction with Microsoft Presidio
 
-This example demonstrates how to use the [Microsoft Presidio](https://microsoft.github.io/presidio/) framework to identify and redact sensitive information from text. The provided script leverages natural language processing to detect various types of personally identifiable information. This includes entities such as names and email addresses as well as phone numbers and locations. Once detected, the system applies a redaction policy to replace these sensitive values with a standard placeholder.
+This example demonstrates how to use the [Microsoft Presidio](https://microsoft.github.io/presidio/) framework to identify and redact sensitive information from text. The provided script leverages natural language processing to detect various types of personally identifiable information. This includes entities such as names, email addresses, phone numbers, and locations. Once detected, the system applies a redaction policy to replace these sensitive values with a standard placeholder.
 
 ## Requirements
 

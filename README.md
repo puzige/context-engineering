@@ -96,6 +96,16 @@ This chapter covers evaluation and observability for context-aware systems:
 - Observability (Langfuse): [Python](./ch08/observability-langfuse)
 - Observability (LangSmith): [Python](./ch08/observability-langsmith)
 
+#### Chapter 9. Governance and operations
+This chapter covers governance, human oversight, and operational patterns for context-aware systems:
+
+- Automated PII redaction with Microsoft Presidio: [Python](./ch09/pii_presidio)
+- Output validation with JSON Schema: [Python](./ch09/output_validation)
+- Bias detection for fairness: [Python](./ch09/bias_detection)
+- Human-in-the-loop story writer: [Python](./ch09/human-in-the-loop)
+- Model fine-tuning: [Python](./ch09/fine_tuning)
+- AI gateway with LiteLLM: [Python](./ch09/litellm_gateway)
+
 ## Online resources
 
 This repository includes interactive web pages that complement the book and help you apply context engineering concepts in practice.

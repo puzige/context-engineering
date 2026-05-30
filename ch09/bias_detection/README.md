@@ -4,21 +4,20 @@ This example demonstrates how to use the [Fairlearn](https://fairlearn.org/) lib
 
 ## Requirements
 
-This project requires [Python](https://www.python.org/) 3.x and the libraries listed in `requirements.txt`.
+This project requires [Python](https://www.python.org/) 3.12 or 3.13 and the libraries listed in `requirements.txt`.
 
 ## Steps for running this example
  
-1. Install dependencies:
+1. Create a virtual environment with Python 3.13 or 3.12, then install dependencies:
 ```bash
-python -m venv .venv
-
 # macOS/Linux:
+python3.13 -m venv .venv
 source .venv/bin/activate
 
-# Windows Command Prompt:
+# Windows Command Prompt / PowerShell:
+py -3.13 -m venv .venv
 .venv\Scripts\activate.bat
-
-# Windows PowerShell:
+# or
 .venv\Scripts\Activate.ps1
 
 pip install -r requirements.txt
@@ -31,13 +30,14 @@ python bias_detection.py
 
 ## Output
 
-The script will analyze a mock dataset of credit approval recommendations and calculate the selection rate across different age groups to identify potential bias.
+The script analyzes a mock dataset of credit approval recommendations, prints the selection rate for each age group, and calculates a demographic parity ratio to identify potential bias.
 
 ```text
 [INFO] Analyzing bias in credit approval recommendations...
 [INFO] Demographic Parity Metrics:
-Selection rate for Group A (Young): 0.25
-Selection rate for Group B (Senior): 0.75
-[WARNING] Disparity detected! Demographic Parity Ratio: 0.33
-[INFO] A ratio below 0.80 suggests potential bias against Group A.
+Selection rate for Young: 0.20
+Selection rate for Senior: 0.60
+[INFO] Demographic Parity Ratio: 0.33
+[WARNING] Significant disparity detected against the Young group.
+[INFO] This result suggests the context or model logic may be biased.
 ```
