@@ -80,3 +80,23 @@ def test_build_agent_wires_filesystem_context_backend_and_memory(monkeypatch):
     assert captured["store"] is sentinel_store
     assert captured["tools"] == []
     assert "filesystem-like paths" in captured["system_prompt"]
+
+
+def test_build_agent_configures_two_isolated_subagents(monkeypatch):
+    module = load_example_module("ch10/deepagents/subagent_delegation/subagent_delegation.py")
+    captured = {}
+
+    def fake_create_deep_agent(**kwargs):
+        captured.update(kwargs)
+        return object()
+
+    monkeypatch.setattr(module, "create_deep_agent", fake_create_deep_agent)
+
+    agent = module.build_agent()
+
+    assert agent is not None
+    assert [subagent["name"] for subagent in captured["subagents"]] == [
+        "research-agent",
+        "writer-agent",
+    ]
+    assert "delegate" in captured["system_prompt"].lower() or "task tool" in captured["system_prompt"].lower()

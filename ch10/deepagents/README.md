@@ -8,6 +8,13 @@ The key features of this example include:
 - Context offloading: Large tool outputs and intermediate artifacts are stored in a virtual filesystem instead of the active context window.
 - Sub-agent delegation: Spawns specialized sub-agents with isolated context for focused work.
 
+## Included examples
+
+- [deep_agent_example](./deep_agent_example/README.md) - the chapter 7-style orchestration anchor
+- [filesystem_context](./filesystem_context/README.md) - filesystem-backed context and memory
+- [subagent_delegation](./subagent_delegation/README.md) - delegated work with isolated subagents
+- [human_approval](./human_approval/README.md) - interrupt-based approval for sensitive tool calls
+
 ## Prerequisites
 
 - Python 3.9+
