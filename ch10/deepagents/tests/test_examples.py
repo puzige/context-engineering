@@ -19,12 +19,16 @@ def load_example_module():
 def test_readme_lists_all_examples():
     readme = (ROOT / "ch10" / "deepagents" / "README.md").read_text(encoding="utf-8")
 
-    example_lines = [line.strip() for line in readme.splitlines() if line.strip().startswith("- `")]
-    assert [line.split("`")[1] for line in example_lines] == [
-        "deep_agent_example",
-        "filesystem_context",
-        "subagent_delegation",
-        "human_approval",
+    parts = readme.split("## Included examples", 1)
+    assert len(parts) == 2, "README missing Included examples section"
+    section = parts[1].split("\n## ", 1)[0]
+    example_lines = [line.strip() for line in section.splitlines() if line.strip().startswith("- ")]
+
+    assert example_lines == [
+        "- [deep_agent_example](./deep_agent_example/README.md) - the chapter 7-style orchestration anchor",
+        "- [filesystem_context](./filesystem_context/README.md) - filesystem-backed context and memory",
+        "- [subagent_delegation](./subagent_delegation/README.md) - delegated work with isolated subagents",
+        "- [human_approval](./human_approval/README.md) - interrupt-based approval for sensitive tool calls",
     ]
 
 
