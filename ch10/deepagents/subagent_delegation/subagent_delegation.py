@@ -27,7 +27,7 @@ def build_agent():
         {
             "name": "research-agent",
             "description": "Performs in-depth repository and documentation research.",
-            "prompt": (
+            "system_prompt": (
                 "Collect only the useful findings, keep notes concise, and avoid "
                 "dragging raw source text back into the main context."
             ),
@@ -35,7 +35,7 @@ def build_agent():
         {
             "name": "writer-agent",
             "description": "Turns research notes into a short final brief.",
-            "prompt": (
+            "system_prompt": (
                 "Convert the research into a brief summary, and avoid repeating "
                 "raw notes or long transcripts."
             ),
