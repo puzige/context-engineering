@@ -19,13 +19,10 @@ def load_example_module():
 def test_readme_lists_all_examples():
     readme = (ROOT / "ch10" / "deepagents" / "README.md").read_text(encoding="utf-8")
 
-    for example in (
-        "deep_agent_example",
-        "filesystem_context",
-        "subagent_delegation",
-        "human_approval",
-    ):
-        assert example in readme
+    assert "deep_agent_example/README.md" in readme
+    assert "filesystem_context/README.md" in readme
+    assert "subagent_delegation/README.md" in readme
+    assert "human_approval/README.md" in readme
 
 
 def test_anchor_example_uses_chapter_7_call_shape(monkeypatch):
