@@ -21,7 +21,7 @@ from typing import Any
 from dotenv import load_dotenv
 from pydantic import BaseModel, Field
 
-from agent_framework import Agent, Context, ContextProvider
+from agent_framework import Agent, ContextProvider, SessionContext
 from agent_framework.openai import OpenAIChatClient
 
 
@@ -91,6 +91,7 @@ class ConversationalStateProvider(ContextProvider):
     """
 
     def __init__(self, state: ConversationState | None = None, **kwargs: Any):
+        super().__init__(source_id="conversational-state")
         if state is not None:
             self.state = state
         elif kwargs:
@@ -98,26 +99,36 @@ class ConversationalStateProvider(ContextProvider):
         else:
             self.state = ConversationState()
 
-    async def invoking(self, messages: Message | MutableSequence[Message], **kwargs: Any) -> Context:
+    async def before_run(
+            self,
+            *,
+            agent: Any,
+            session: Any,
+            context: SessionContext,
+            state: dict[str, Any],
+    ) -> None:
         s = self.state
 
         if not s.goal:
-            return Context(
-                instructions=(
+            context.extend_instructions(
+                self.source_id,
+                (
                     "You are a goal-driven assistant.\n"
                     "The user has NOT set a goal yet.\n"
                     "Ask for a goal before answering anything else. Politely refuse to proceed until a goal is provided.\n"
                     "Example: 'What is your goal? You can say: /goal <text>'."
-                )
+                ),
             )
+            return
 
         # If goal exists, inject the state as operational context
         plan_text = "\n".join([f"- {p}" for p in s.plan]) if s.plan else "(no plan set)"
         completed_text = "\n".join([f"- {c}" for c in s.completed_steps]) if s.completed_steps else "(none)"
         current = s.current_step() or "(no current step)"
 
-        return Context(
-            instructions=(
+        context.extend_instructions(
+            self.source_id,
+            (
                 "You are a goal-driven assistant.\n"
                 "Use the following STATE to keep continuity and avoid re-asking for known info.\n"
                 f"GOAL: {s.goal}\n"
@@ -128,19 +139,20 @@ class ConversationalStateProvider(ContextProvider):
                 "If the user asks 'what next', point to the current step.\n"
                 "If no plan exists, propose a short 3–5 step plan and ask the user to confirm.\n"
                 "Do not invent completed work; only use the state."
-            )
+            ),
         )
 
-    async def invoked(
+    async def after_run(
             self,
-            request_messages: Message | Sequence[Message],
-            response_messages: Message | Sequence[Message] | None = None,
-            invoke_exception: Exception | None = None,
+            *,
+            agent: Any,
+            session: Any,
+            context: SessionContext,
+            state: dict[str, Any],
             **kwargs: Any,
     ) -> None:
         # Update state based on the last user message
-        msgs = [request_messages] if isinstance(request_messages, Message) else list(request_messages)
-        user_msgs = [m for m in msgs if _role_value(m) == "user"]
+        user_msgs = [m for m in context.input_messages if _role_value(m) == "user"]
         if not user_msgs:
             return
 
@@ -212,7 +224,7 @@ def save_state(state: ConversationState) -> None:
 async def main() -> None:
     load_dotenv()
 
-    client = OpenAIChatClient(model_id=MODEL_ID)
+    client = OpenAIChatClient(model=MODEL_ID)
 
     state = load_state()
     provider = ConversationalStateProvider(state=state)
@@ -223,9 +235,9 @@ async def main() -> None:
                     "You are a helpful assistant. Be concise.\n"
                     "The system may provide you with STATE. Follow it."
             ),
-            context_provider=provider,
+            context_providers=[provider],
     ) as agent:
-        thread = agent.get_new_thread()
+        session = agent.create_session()
 
         print("\nStateful agent ready. Type 'exit' to quit.\n")
         print("Commands: /goal, /plan, /next, /state, /reset\n")
@@ -243,7 +255,7 @@ async def main() -> None:
                 print()
                 continue
 
-            reply = await agent.run(user_input, thread=thread)
+            reply = await agent.run(user_input, session=session)
             print(f"\nAgent: {reply}\n")
 
             # persist after each turn

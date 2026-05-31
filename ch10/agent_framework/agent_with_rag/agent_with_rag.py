@@ -20,7 +20,7 @@ from typing import Annotated, Optional, Sequence
 from dotenv import load_dotenv
 
 import agent_framework
-from agent_framework.openai import OpenAIResponsesClient
+from agent_framework.openai import OpenAIChatClient
 
 from semantic_kernel.connectors.ai.open_ai import OpenAITextEmbedding
 from semantic_kernel.connectors.in_memory import InMemoryCollection
@@ -215,7 +215,7 @@ async def main() -> None:
     search_tool = search_function.as_agent_framework_tool()
 
     # Create the agent
-    client = OpenAIResponsesClient()
+    client = OpenAIChatClient(model=CHAT_MODEL_ID)
     agent = client.as_agent(
         instructions=(
             "You are a helpful support assistant. "

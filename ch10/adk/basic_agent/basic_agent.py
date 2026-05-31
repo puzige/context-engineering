@@ -45,7 +45,7 @@ async def main():
 
     user_prompt = "Hello, agent!"
     user_message = Content(parts=[Part(text=user_prompt)], role="user")
-        
+
     response = ""
     async for event in runner.run_async(user_id=USER_ID, session_id=SESSION_ID, new_message=user_message):
         if event.is_final_response() and event.content and event.content.parts:
@@ -53,6 +53,7 @@ async def main():
 
     print(f"User: {user_prompt}")
     print(f"Agent: {response}")
+
 
 if __name__ == "__main__":
     asyncio.run(main())

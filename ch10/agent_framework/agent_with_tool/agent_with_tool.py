@@ -26,10 +26,10 @@ def get_time() -> str:
     """Get current time."""
     return "Current time: 2:30 PM"
 
-# Create client
-client = OpenAIChatClient(model_id="gpt-5")
-
 async def main():
+    # Create client
+    client = OpenAIChatClient(model="gpt-5")
+
     # Agent creation with factory method
     agent = client.as_agent(
         name="assistant",
