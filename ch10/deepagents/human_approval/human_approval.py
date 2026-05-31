@@ -27,6 +27,7 @@ except ImportError:  # pragma: no cover - keeps the example importable without d
 
 
 def remove_file(path: str) -> str:
+    """Request removal of a file at the given path."""
     return f"Requested removal of {path}."
 
 
