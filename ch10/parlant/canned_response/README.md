@@ -38,4 +38,13 @@ python canned_response.py
 
 ## Output
 
-When you run the script, it will print the results to the terminal.
+```
+User: There is a shipping delay on my order.
+Template: We are sorry for the delay. I am checking the latest status now.
+
+User: I found a billing issue.
+Template: Thanks for flagging this. I will connect you with the billing team.
+
+User: Can you check the order status?
+Template: I can help with that. Please share your order number.
+```

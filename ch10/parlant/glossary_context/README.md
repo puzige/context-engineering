@@ -44,4 +44,8 @@ python glossary_context.py
 
 ## Output
 
-When you run the script, it will print the results to the terminal.
+```
+User: I need a service appointment and maybe a loaner.
+Glossary: service appointment: a scheduled visit for maintenance or repair
+Glossary: loaner: a temporary replacement vehicle
+```

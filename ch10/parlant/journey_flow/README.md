@@ -44,4 +44,17 @@ python journey_flow.py
 
 ## Output
 
-When you run the script, it will print the results to the terminal.
+```
+State: start
+User: Hi
+Agent: Welcome. What can I help you with today?
+
+State: collect details
+User: Here is my issue
+Agent: Thanks. I have enough to move to the next step.
+
+State: resolve
+User: Confirmed
+Agent: Great, the journey is complete.
+```
+

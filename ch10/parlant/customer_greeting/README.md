@@ -44,4 +44,12 @@ python customer_greeting.py
 
 ## Output
 
-When you run the script, it will print the results to the terminal.
+```
+[info     ] [<main>] Parlant server version 3.3.2
+[info     ] [<main>] .-----------------------------------------.
+[info     ] [<main>] | Server is ready for some serious action |
+[info     ] [<main>] '-----------------------------------------'
+[info     ] [<main>] Server authorization policy: development
+[info     ] [<main>] Try the Sandbox UI at http://localhost:8800
+[info     ] [<main>] Server is ready to accept requests.
+```

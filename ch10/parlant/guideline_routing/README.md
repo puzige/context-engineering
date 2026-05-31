@@ -43,4 +43,13 @@ python guideline_routing.py
 
 ## Output
 
-When you run the script, it will print the results to the terminal.
+```
+User: Hello there, I just arrived.
+Routed guideline: offer a refreshing drink and ask how you can help
+
+User: Do you have financing available?
+Routed guideline: explain financing options and next steps
+
+User: I want to trade in my old car.
+Routed guideline: ask for the current vehicle details and mileage
+```

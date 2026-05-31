@@ -1,0 +1,20 @@
+{
+  "guideline_evaluations_3.3.2": [
+    {
+      "id": "83b3f8f681c094496e69d7b919dbb187",
+      "creation_utc": "2026-05-31T21:01:48.146775+00:00",
+      "version": "3.3.2",
+      "properties": {
+        "continuous": false,
+        "customer_dependent_action_data": {
+          "is_customer_dependent": true,
+          "customer_action": "The customer responds to how the agent can help",
+          "agent_action": "The agent offers a refreshing drink and asks how they can help"
+        },
+        "agent_intention_condition": null,
+        "internal_action": null
+      }
+    }
+  ],
+  "journey_evaluations_3.3.2": []
+}
