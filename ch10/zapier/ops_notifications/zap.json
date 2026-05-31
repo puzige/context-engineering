@@ -1,0 +1,56 @@
+{
+  "name": "Ops notifications",
+  "trigger": {
+    "app": "Monitoring",
+    "event": "New Alert",
+    "description": "Operational event from the monitoring stack"
+  },
+  "steps": [
+    {
+      "type": "ai",
+      "app": "OpenAI",
+      "event": "Classify Alert",
+      "inputs": ["service", "message", "metric"],
+      "output": "severity"
+    },
+    {
+      "type": "path",
+      "name": "Critical",
+      "rule": "severity = critical",
+      "actions": [
+        {
+          "app": "PagerDuty",
+          "event": "Trigger Incident",
+          "destination": "On-call"
+        }
+      ]
+    },
+    {
+      "type": "path",
+      "name": "Warning",
+      "rule": "severity = warning",
+      "actions": [
+        {
+          "app": "Slack",
+          "event": "Send Channel Message",
+          "destination": "#ops-alerts"
+        }
+      ]
+    },
+    {
+      "type": "path",
+      "name": "Info",
+      "rule": "default",
+      "actions": [
+        {
+          "app": "Email",
+          "event": "Send Digest",
+          "destination": "Ops inbox"
+        }
+      ]
+    }
+  ],
+  "audit": {
+    "record_decision": true
+  }
+}

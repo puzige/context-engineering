@@ -1,0 +1,56 @@
+{
+  "name": "Support routing",
+  "trigger": {
+    "app": "Webhooks by Zapier",
+    "event": "Catch Hook",
+    "description": "New support request arrives"
+  },
+  "steps": [
+    {
+      "type": "ai",
+      "app": "OpenAI",
+      "event": "Analyze Text",
+      "input": "Support ticket subject and body",
+      "output": "category"
+    },
+    {
+      "type": "path",
+      "name": "Billing",
+      "rule": "category = billing",
+      "actions": [
+        {
+          "app": "Zendesk",
+          "event": "Update Ticket",
+          "destination": "Finance Support"
+        }
+      ]
+    },
+    {
+      "type": "path",
+      "name": "Operations",
+      "rule": "category = ops",
+      "actions": [
+        {
+          "app": "Slack",
+          "event": "Send Channel Message",
+          "destination": "#ops-support"
+        }
+      ]
+    },
+    {
+      "type": "path",
+      "name": "General",
+      "rule": "default",
+      "actions": [
+        {
+          "app": "Zendesk",
+          "event": "Create Ticket",
+          "destination": "Tier 1 Support"
+        }
+      ]
+    }
+  ],
+  "audit": {
+    "record_decision": true
+  }
+}

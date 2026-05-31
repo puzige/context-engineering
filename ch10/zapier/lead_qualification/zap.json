@@ -1,0 +1,37 @@
+{
+  "name": "Lead qualification",
+  "trigger": {
+    "app": "CRM",
+    "event": "New Lead",
+    "description": "A prospect enters the funnel"
+  },
+  "steps": [
+    {
+      "type": "ai",
+      "app": "OpenAI",
+      "event": "Score Lead",
+      "inputs": ["budget", "timeline_days", "title"],
+      "output": "score"
+    },
+    {
+      "type": "filter",
+      "name": "High intent",
+      "rule": "score >= 60"
+    },
+    {
+      "type": "action",
+      "app": "Salesforce",
+      "event": "Create Task",
+      "destination": "Sales follow-up"
+    },
+    {
+      "type": "action",
+      "app": "Email",
+      "event": "Add to Sequence",
+      "destination": "Nurture sequence"
+    }
+  ],
+  "audit": {
+    "record_decision": true
+  }
+}

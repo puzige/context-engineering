@@ -1,0 +1,79 @@
+{
+  "name": "Error recovery",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "1",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{ json: { attempt: 1, status: 'failed', reason: 'temporary failure' } }];"
+      },
+      "id": "2",
+      "name": "Primary Operation",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json.status}}",
+              "operation": "equals",
+              "value2": "ok"
+            }
+          ]
+        }
+      },
+      "id": "3",
+      "name": "IF Success",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "amount": 10,
+        "unit": "seconds"
+      },
+      "id": "4",
+      "name": "Retry Delay",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [900, 220]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "status",
+              "value": "fallback"
+            }
+          ]
+        }
+      },
+      "id": "5",
+      "name": "Fallback Action",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [1120, 300]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {"main": [[{"node": "Primary Operation", "type": "main", "index": 0}]]},
+    "Primary Operation": {"main": [[{"node": "IF Success", "type": "main", "index": 0}]]},
+    "IF Success": {"main": [[{"node": "Fallback Action", "type": "main", "index": 0}], [{"node": "Retry Delay", "type": "main", "index": 0}]]},
+    "Retry Delay": {"main": [[{"node": "Fallback Action", "type": "main", "index": 0}]]}
+  },
+  "settings": {},
+  "pinData": {},
+  "versionId": "error-recovery-example"
+}

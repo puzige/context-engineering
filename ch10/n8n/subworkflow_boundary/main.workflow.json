@@ -1,0 +1,77 @@
+{
+  "name": "Subworkflow boundary - main flow",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "1",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{ json: { orderId: 'ORD-204', shouldDelegate: true } }];"
+      },
+      "id": "2",
+      "name": "Decide Delegation",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$json.shouldDelegate}}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "3",
+      "name": "IF Delegate",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "workflowId": "subworkflow-boundary-enrich-order"
+      },
+      "id": "4",
+      "name": "Execute Enrichment Workflow",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [900, 220]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "status",
+              "value": "continued in main workflow"
+            }
+          ]
+        }
+      },
+      "id": "5",
+      "name": "Continue Main Flow",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [1120, 300]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {"main": [[{"node": "Decide Delegation", "type": "main", "index": 0}]]},
+    "Decide Delegation": {"main": [[{"node": "IF Delegate", "type": "main", "index": 0}]]},
+    "IF Delegate": {"main": [[{"node": "Execute Enrichment Workflow", "type": "main", "index": 0}], [{"node": "Continue Main Flow", "type": "main", "index": 0}]]},
+    "Execute Enrichment Workflow": {"main": [[{"node": "Continue Main Flow", "type": "main", "index": 0}]]}
+  },
+  "settings": {},
+  "pinData": {},
+  "versionId": "subworkflow-boundary-main"
+}

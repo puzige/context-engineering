@@ -1,0 +1,66 @@
+{
+  "name": "Data assembly",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "1",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {"name": "first", "value": "Ada"},
+            {"name": "last", "value": "Lovelace"},
+            {"name": "email", "value": "ada@example.com"}
+          ]
+        }
+      },
+      "id": "2",
+      "name": "Read Raw Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const customer = { name: `${$json.first} ${$json.last}`, email: $json.email }; const order = { id: 'ORD-512', items: ['book', 'pen'], priority: 'high' }; return [{ json: { customer, order } }];"
+      },
+      "id": "3",
+      "name": "Assemble Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "status",
+              "value": "ready for downstream execution"
+            }
+          ]
+        }
+      },
+      "id": "4",
+      "name": "Downstream Payload",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [900, 300]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {"main": [[{"node": "Read Raw Fields", "type": "main", "index": 0}]]},
+    "Read Raw Fields": {"main": [[{"node": "Assemble Payload", "type": "main", "index": 0}]]},
+    "Assemble Payload": {"main": [[{"node": "Downstream Payload", "type": "main", "index": 0}]]}
+  },
+  "settings": {},
+  "pinData": {},
+  "versionId": "data-assembly-example"
+}

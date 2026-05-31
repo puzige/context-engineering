@@ -1,5 +1,7 @@
 # Autonomous loop
 
-This example shows a local agent cycling through plan, act, inspect, and continue.
+This example shows an always-on OpenClaw gateway configuration with heartbeat and session defaults.
 
-It is useful when the platform needs a repeatable loop rather than a one-shot response.
+It is useful when the assistant should stay available and keep a steady cadence.
+
+Inspect `openclaw.json5`.

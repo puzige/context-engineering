@@ -1,0 +1,56 @@
+{
+  "name": "Approval chain",
+  "trigger": {
+    "app": "Forms",
+    "event": "New Approval Request",
+    "description": "A work item requires policy review"
+  },
+  "steps": [
+    {
+      "type": "ai",
+      "app": "OpenAI",
+      "event": "Extract Reviewers",
+      "inputs": ["request", "amount", "risk"],
+      "output": "reviewers"
+    },
+    {
+      "type": "path",
+      "name": "Manager",
+      "rule": "always",
+      "actions": [
+        {
+          "app": "Email",
+          "event": "Request Approval",
+          "destination": "Manager"
+        }
+      ]
+    },
+    {
+      "type": "path",
+      "name": "Finance",
+      "rule": "amount >= 5000",
+      "actions": [
+        {
+          "app": "Email",
+          "event": "Request Approval",
+          "destination": "Finance"
+        }
+      ]
+    },
+    {
+      "type": "path",
+      "name": "Legal",
+      "rule": "risk in [medium, high]",
+      "actions": [
+        {
+          "app": "Email",
+          "event": "Request Approval",
+          "destination": "Legal"
+        }
+      ]
+    }
+  ],
+  "audit": {
+    "record_decision": true
+  }
+}

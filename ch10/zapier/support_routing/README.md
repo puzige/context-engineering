@@ -9,4 +9,8 @@ It is documented as a recipe because the platform lives primarily in the hosted 
 - Tool use outside the chat window
 - Business process integration with guardrails
 
-See `recipe.md` for the step-by-step routing sequence.
+## Manifest
+
+Inspect `zap.json` for the step layout.
+
+See `recipe.md` for the step-by-step routing sequence that the manifest mirrors.

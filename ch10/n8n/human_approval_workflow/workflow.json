@@ -1,0 +1,86 @@
+{
+  "name": "Human approval workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "1",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const request = { id: 'REQ-417', summary: 'Deploy the updated agent flow', amount: 7800, risk: 'medium' }; return [{ json: { ...request, needsApproval: request.amount >= 5000 || request.risk === 'high' } }];"
+      },
+      "id": "2",
+      "name": "Classify Request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$json.needsApproval}}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "3",
+      "name": "IF Approval Needed",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "amount": 1,
+        "unit": "hours"
+      },
+      "id": "4",
+      "name": "Wait for Approval",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [900, 220]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "result",
+              "value": "approved"
+            }
+          ]
+        }
+      },
+      "id": "5",
+      "name": "Final Action",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [1120, 300]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [[{"node": "Classify Request", "type": "main", "index": 0}]]
+    },
+    "Classify Request": {
+      "main": [[{"node": "IF Approval Needed", "type": "main", "index": 0}]]
+    },
+    "IF Approval Needed": {
+      "main": [[{"node": "Wait for Approval", "type": "main", "index": 0}], [{"node": "Final Action", "type": "main", "index": 0}]]
+    },
+    "Wait for Approval": {
+      "main": [[{"node": "Final Action", "type": "main", "index": 0}]]
+    }
+  },
+  "settings": {},
+  "pinData": {},
+  "versionId": "approval-flow-example"
+}

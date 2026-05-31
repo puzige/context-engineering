@@ -1,5 +1,5 @@
 # n8n error recovery
 
-This companion describes how n8n handles failures with retries, error branches, and fallback paths.
+This companion describes how n8n handles failures with visible retry and fallback branches.
 
-It keeps error handling visible in the workflow instead of hiding it in code.
+Inspect `workflow.json` for the recovery path.

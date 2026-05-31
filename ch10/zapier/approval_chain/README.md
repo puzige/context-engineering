@@ -7,3 +7,7 @@ This example shows Zapier using an AI step to prepare work for a multi-step appr
 - Hosted trigger-action automation
 - AI-assisted triage before approval
 - Sequential routing through the right reviewers before execution
+
+## Manifest
+
+Inspect `zap.json` for the approval sequence.

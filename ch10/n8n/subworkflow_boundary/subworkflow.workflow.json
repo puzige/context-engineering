@@ -1,0 +1,48 @@
+{
+  "name": "Subworkflow boundary - enrich order",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "1",
+      "name": "Subworkflow Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{ json: { orderId: 'ORD-204', status: 'enriched', source: 'subworkflow' } }];"
+      },
+      "id": "2",
+      "name": "Enrich Customer Order",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "result",
+              "value": "returned to main workflow"
+            }
+          ]
+        }
+      },
+      "id": "3",
+      "name": "Return Result",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [680, 300]
+    }
+  ],
+  "connections": {
+    "Subworkflow Trigger": {"main": [[{"node": "Enrich Customer Order", "type": "main", "index": 0}]]},
+    "Enrich Customer Order": {"main": [[{"node": "Return Result", "type": "main", "index": 0}]]}
+  },
+  "settings": {},
+  "pinData": {},
+  "versionId": "subworkflow-boundary-enrich-order"
+}
