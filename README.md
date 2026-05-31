@@ -107,12 +107,11 @@ This chapter covers governance, human oversight, and operational patterns for co
 - AI gateway (LiteLLM): [Python](./ch09/litellm_gateway)
 
 #### Chapter 10. AI frameworks for context engineering
-This chapter maps framework choices to the kind of context problem they solve:
+This chapter covers specific AI frameworks that facilitate context engineering, including application frameworks, agent orchestration frameworks, and AI application platforms:
 
-- AI application frameworks: [Haystack](./ch10/haystack) · [AI SDK](./ch10/ai_sdk) · [Spring AI](./ch10/spring_ai) · [Pydantic AI](./ch10/pydantic_ai) · [DSPy](./ch10/dspy)
-- Agent orchestration frameworks: [LangGraph](./ch10/langgraph) · [CrewAI](./ch10/crewai) · [DeepAgents](./ch10/deepagents)
-- AI application platforms: [Agno](./ch10/agno) · [Parlant](./ch10/parlant) · [Temporal](./ch10/temporal)
-- Visual workflow platforms: [Dify](./ch10/dify) · [LangFlow](./ch10/langflow) · [Flowise](./ch10/flowise) · [Zapier](./ch10/zapier) · [n8n](./ch10/n8n) · [OpenClaw](./ch10/openclaw)
+- AI application frameworks: [LangChain](./ch10/langchain) · [LlamaIndex](./ch10/llamaindex) · [Haystack](./ch10/haystack) · [AI SDK](./ch10/ai_sdk) · [Spring AI](./ch10/spring_ai) · [Pydantic AI](./ch10/pydantic_ai) · [DSPy](./ch10/dspy)
+- Agent orchestration frameworks: [LangGraph](./ch10/langgraph) · [CrewAI](./ch10/crewai) · [DeepAgents](./ch10/deepagents) · [Agno](./ch10/agno) · [Parlant](./ch10/parlant) · [Semantic Kernel](./ch10/semantic_kernel) · [Agent Development Kit](./ch10/agent_development_kit) · [Microsoft Agent Framework](./ch10/agent_framework)
+- AI application platforms: [Zapier](./ch10/zapier) · [n8n](./ch10/n8n) · [OpenClaw](./ch10/openclaw) · [Temporal](./ch10/temporal)
 
 ## Online resources
 
