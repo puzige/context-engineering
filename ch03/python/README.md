@@ -1,6 +1,6 @@
 # Retrieval-Augmented Generation (RAG) in Python
 
-This folder contains Python examples for different RAG patterns, including local RAG, agentic RAG, and context-augmented generation (CAG).
+This folder contains Python examples for different RAG patterns, including local RAG, agentic RAG, and context stuffing.
 
 ## Requirements
 
