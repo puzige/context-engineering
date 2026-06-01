@@ -5,19 +5,13 @@ This example shows how a small local state object can remember one fact and answ
 ## Prerequisites
 
 - Python 3.10+
-- `pytest` from this folder's `requirements.txt`
-
-## Files to inspect first
-
-- `memory_state_notes.md`: the exact prompts and expected topic value.
-- `memory_state_config.md`: the minimal local-file setup notes.
-- `semantic_kernel_memory_state.py`: the runnable example and helper functions.
+- standard library only
 
 ## Configure
 
 1. Create and activate a virtual environment.
 2. Install dependencies with `pip install -r requirements.txt`.
-3. Read `memory_state_config.md` and keep the example folder writable so `memory_state.json` can be created.
+3. Keep the example folder writable so `memory_state.json` can be created.
 
 ## Run
 
@@ -27,7 +21,6 @@ This example shows how a small local state object can remember one fact and answ
 
 ## Expected result
 
-- `memory_state.json` appears in this folder.
 - The stored topic is `semantic kernels`.
 - The script prints the remembered topic and then `semantic kernels`.
 

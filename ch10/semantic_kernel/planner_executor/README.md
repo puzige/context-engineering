@@ -5,22 +5,14 @@ This example shows a local Semantic Kernel process with two deterministic steps:
 ## Prerequisites
 
 - Python 3.10+
-- `semantic-kernel` and `pytest` installed from this folder's `requirements.txt`
+- `semantic-kernel` and `pydantic` installed from this folder's `requirements.txt`
 - No API key or external chat-completion service is required
-
-## Files to inspect first
-
-- `planner_executor_plan.md`: the exact request string and the ordered workflow.
-- `planner_executor_config.md`: the local setup notes for the process demo.
-- `semantic_kernel_planner_executor.py`: the deterministic helpers, process steps, and `main()` entry point.
-- `test_semantic_kernel_planner_executor.py`: the exact helper output assertions.
 
 ## Configure Semantic Kernel
 
 1. Create and activate a Python virtual environment.
 2. Install the dependencies from `requirements.txt`.
-3. Read `planner_executor_config.md` and keep the example folder as the active workspace.
-4. Read `planner_executor_plan.md` and confirm the exact request string is visible before you run anything.
+3. Keep the example folder as the active workspace.
 
 ## Run the example
 
@@ -30,7 +22,6 @@ This example shows a local Semantic Kernel process with two deterministic steps:
 
 ## Expected result
 
-- The request is split into a short, readable plan.
 - The executor runs those plan steps in order.
 - The final output includes both `Plan:` and `Execution:` sections.
 
