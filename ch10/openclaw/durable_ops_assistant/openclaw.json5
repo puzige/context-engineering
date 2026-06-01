@@ -1,0 +1,20 @@
+{
+  agents: {
+    defaults: {
+      workspace: "./.openclaw/durable-ops",
+      heartbeat: {
+        every: "30m",
+        target: "last"
+      },
+      retry: {
+        maxAttempts: 3,
+        backoff: "5m"
+      }
+    }
+  },
+  cron: {
+    enabled: true,
+    scheduleFile: "schedule.md"
+  },
+  resumeAfterInterruption: true
+}

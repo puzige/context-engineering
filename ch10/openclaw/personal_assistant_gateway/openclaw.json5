@@ -1,0 +1,25 @@
+{
+  agents: {
+    defaults: {
+      workspace: "./.openclaw/personal-assistant-gateway",
+      model: {
+        primary: "openai/gpt-4o-mini"
+      },
+      approvals: {
+        riskyActions: true
+      }
+    }
+  },
+  tools: {
+    localNotes: {
+      enabled: true,
+      file: "./notes.md"
+    }
+  },
+  routing: {
+    automatic: "default",
+    ambiguous: "clarify",
+    risky: "approval",
+    toolAction: "localNotes"
+  }
+}

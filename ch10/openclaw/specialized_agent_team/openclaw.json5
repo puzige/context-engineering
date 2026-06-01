@@ -1,0 +1,16 @@
+{
+  agents: {
+    defaults: {
+      workspace: "./.openclaw/specialized-team",
+      model: {
+        primary: "anthropic/claude-sonnet-4-6",
+      },
+    },
+  },
+  team: {
+    sharedMemory: "project-notes.md",
+    handoff: "lead-handoff.md",
+    lead: "lead.md",
+    specialists: ["researcher.md", "writer.md"],
+  },
+}
