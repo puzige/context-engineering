@@ -821,5 +821,13 @@
     "URL": "https://addyosmani.com/blog/orchestration-tax/",
     "Description": "Running more AI agents increases output but not human attention; the 'orchestration tax' is the growing gap between what agents produce and what a single person can effectively review, understand, and merge.",
     "Keywords": "AI agents"
+  },
+  {
+    "Title": "Using Claude Code: The unreasonable effectiveness of HTML",
+    "Author": "Claude Blog",
+    "Year": 2026,
+    "URL": "https://addyosmani.com/blog/orchestration-tax/",
+    "Description": "AI agents communicate more effectively when they generate interactive HTML artifacts instead of plain Markdown documents.",
+    "Keywords": "AI agents"
   }
 ]
