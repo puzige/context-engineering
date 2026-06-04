@@ -123,6 +123,12 @@ This chapter shows how context engineering supports the software development lif
 - Orchestration: [Open GSD](./ch11/open-gsd-antigravity)
 - Orchestration: [BMAD](./ch11/bmad-specialized-agents)
 
+#### Chapter 12. State of the art on context engineering
+This chapter covers mathematical foundations, open research challenges, technical innovation frontiers, domain-specific applications, and future directions:
+
+- Base knowledge: [base_knowledge](./ch12/base_knowledge)
+- Technology radar: [context_engineering_radar](./ch12/context_engineering_radar)
+
 ## Online resources
 
 This repository includes interactive web pages that complement the book and help you apply context engineering concepts in practice.
