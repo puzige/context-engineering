@@ -114,7 +114,7 @@ This chapter covers specific AI frameworks that facilitate context engineering, 
 - AI application platforms: [Zapier](./ch10/zapier) · [n8n](./ch10/n8n) · [OpenClaw](./ch10/openclaw) · [Temporal](./ch10/temporal)
 
 #### Chapter 11. Context engineering for software development
-This chapter shows how context engineering supports the software development lifecycle through reusable skills, artifacts, external documentation, orchestration layers, and specialized agents:
+This chapter shows how context engineering supports the software development lifecycle (SDLC) through reusable skills, instruction artifacts, external documentation retrieval, orchestration layers, and specialized agents:
 
 - Specification-driven development: [Spec Kit](./ch11/spec-kit-sdd)
 - Agent skills: [agent-skills](./ch11/claude-code-agent-skills)
