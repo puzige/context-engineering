@@ -117,7 +117,7 @@ This chapter covers specific AI frameworks that facilitate context engineering, 
 This chapter shows how context engineering supports the software development lifecycle through reusable skills, artifacts, external documentation, orchestration layers, and specialized agents:
 
 - Specification-driven development: [Spec Kit](./ch11/spec-kit-sdd)
-- Agent skills: [Claude Code](./ch11/claude-code-agent-skills)
+- Agent skills: [agent-skills](./ch11/claude-code-agent-skills)
 - Documentation retrieval: [Context7](./ch11/cursor-context7)
 - Orchestration: [Superpowers](./ch11/opencode-superpowers)
 - Orchestration: [Open GSD](./ch11/open-gsd-antigravity)
