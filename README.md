@@ -119,9 +119,9 @@ This chapter shows how context engineering supports the software development lif
 - Specification-driven development: [Spec Kit](./ch11/spec-kit-sdd)
 - Agent skills: [agent-skills](./ch11/claude-code-agent-skills)
 - Documentation retrieval: [Context7](./ch11/cursor-context7)
-- Workflow orchestration: [Superpowers](./ch11/opencode-superpowers)
-- Structured development: [Open GSD](./ch11/open-gsd-antigravity)
-- Specialized agents: [BMAD](./ch11/bmad-specialized-agents)
+- Orchestration (workflow): [Superpowers](./ch11/opencode-superpowers)
+- Orchestration (workflow): [Open GSD](./ch11/open-gsd-antigravity)
+- Orchestration (specialized agents): [BMAD](./ch11/bmad-specialized-agents)
 
 ## Online resources
 
