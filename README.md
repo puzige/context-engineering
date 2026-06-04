@@ -119,6 +119,7 @@ This chapter shows how context engineering supports the software development lif
 - Specification-driven development: [Spec Kit](./ch11/spec-kit-sdd)
 - SDLC prompt library: [Web page](./ch11/sdlc-prompt-library)
 - Agent skills: [agent-skills](./ch11/claude-code-agent-skills)
+- Instructions artifact: [karpathy-instructions-cursor](./ch11/karpathy-instructions-cursor)
 - Documentation retrieval: [Context7](./ch11/codex-context7)
 - Orchestration: [Superpowers](./ch11/opencode-superpowers)
 - Orchestration: [Open GSD](./ch11/antigravity-open-gsd)

@@ -1,0 +1,28 @@
+---
+description: Apply Karpathy-inspired coding guidelines to ensure simple, surgical, and goal-driven implementation
+globs: "*.py"
+alwaysApply: true
+---
+# Karpathy-Inspired Coding Guidelines
+
+These guidelines are inspired by Andrej Karpathy's observations on LLM coding pitfalls (e.g., silent assumptions, over-engineering, unintended side effects, and lack of verification) and the open-source `andrej-karpathy-skills` project.
+
+## 1. Think Before Coding
+- **No Silent Assumptions:** Never guess requirements. If a task or specification is ambiguous, ask for clarification.
+- **Surface Tradeoffs:** If there are multiple ways to implement something, list the options and trade-offs before proceeding.
+- **Push Back:** If a simpler design is possible or if requested logic contradicts existing standards, suggest alternatives.
+
+## 2. Simplicity First
+- **Minimal Code:** Implement the absolute minimum code required to solve the request. Avoid speculative features or abstractions.
+- **Senior Engineer Test:** Write code that passes the "Senior Engineer Test" (clean, readable, and free of over-engineering).
+- **YAGNI (You Aren't Gonna Need It):** Do not add hooks, config parameters, or flexibility options unless explicitly requested.
+
+## 3. Surgical Changes
+- **Local Edits Only:** Modify only the files and lines necessary to fulfill the request.
+- **Do Not "Clean Up" Unrelated Code:** Avoid formatting, refactoring, or updating adjacent code/comments unless explicitly asked.
+- **Prune Unused Code:** Remove only imports, functions, or variables that your specific changes made obsolete.
+
+## 4. Goal-Driven Execution
+- **Tests First:** Write or locate the tests that verify the requested behavior before implementing the logic.
+- **Verifiable Success Criteria:** Define exactly how you will verify success (e.g., specific test commands, log outputs).
+- **Verify Execution:** Always run tests to verify your implementation before declaring the task complete.
