@@ -19,3 +19,5 @@ The seven prompts are:
 7. [The documenter](07_documenter.md) (for documentation).
 
 These prompts are intended to be adapted to the target stack, repository conventions, and delivery environment. They are not magic formulas but reusable context containers for recurring software engineering work.
+
+You can play with these prompts in the (context-aware prompt library](https://bonigarcia.dev/context-engineering/context-aware-prompt-builder.html).
