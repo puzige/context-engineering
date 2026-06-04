@@ -1,10 +1,8 @@
-# Context Engineering Radar
+# Context engineering radar
 
 This example demonstrates how to design and build an interactive, web-based *technology radar* dashboard to catalog and visualize context engineering concepts, publications, frameworks, and tools.
 
-## Publication & Source Code
-
-The implementation files and production assets for this radar are maintained inside the repository's [docs/](/docs/) folder (which is served via GitHub Pages):
+The implementation files and production assets for this radar are maintained inside the repository's `docs` folder which is served via GitHub Pages:
 
 - Live URL: https://bonigarcia.dev/context-engineering/context-engineering-radar.html
 - Source Files:
