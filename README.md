@@ -23,7 +23,7 @@ This book aims to provide a strong, general-purpose theoretical foundation for c
 9. Governance and operations
 10. AI frameworks for context engineering
 11. Context engineering for software development
-12. State of the art on context engineering  
+12. The state of the art in context engineering
 Appendix A. The AI ecosystem  
 Appendix B. References and further reading
 
@@ -116,11 +116,11 @@ This chapter covers specific AI frameworks that facilitate context engineering, 
 #### Chapter 11. Context engineering for software development
 This chapter shows how context engineering supports the software development lifecycle (SDLC) through reusable skills, instruction artifacts, external documentation retrieval, orchestration layers, and specialized agents:
 
-- Specification-driven development: [Spec Kit](./ch11/spec-kit-sdd)
-- SDLC prompt library: [Web page](./ch11/sdlc-prompt-library)
 - Agent skills: [agent-skills](./ch11/claude-code-agent-skills)
 - Instructions artifact: [karpathy-instructions-cursor](./ch11/karpathy-instructions-cursor)
 - Documentation retrieval: [Context7](./ch11/codex-context7)
+- SDLC prompt library: [Web page](./ch11/sdlc-prompt-library)
+- Specification-driven development: [Spec Kit](./ch11/spec-kit-sdd)
 - Orchestration: [Superpowers](./ch11/opencode-superpowers)
 - Orchestration: [Open GSD](./ch11/antigravity-open-gsd)
 - Orchestration: [BMAD](./ch11/bmad-specialized-agents)
