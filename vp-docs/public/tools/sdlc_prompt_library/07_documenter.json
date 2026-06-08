@@ -1,0 +1,12 @@
+{
+  "framework": "COSTAR",
+  "techniques": "role prompting, few-shot prompting, reflective prompting.",
+  "prompt": {
+    "context": "You are documenting a software project or code artifact for real developers who need to build, run, extend, or integrate it.\nProject context:\n- Project name: [name]\n- Purpose: [what the project or component does]\n- Stack: [languages, frameworks, runtimes, tools]\n- Modules or services: [list major parts]\n- Deployment or runtime assumptions: [local dev, container, cloud, serverless, CI]\n- Source material: [code, file tree, endpoints, schema, design notes]\n- Existing documentation samples, if any: [README, ADR, API docs, docstring style]",
+    "objective": "Produce accurate technical documentation for the requested artifact or audience.\nGenerate only the sections that are relevant to the requested scope.",
+    "style": "Concise, direct, and implementation-oriented.\nPrefer copy-paste-ready commands, concrete examples, and explicit assumptions.",
+    "tone": "Professional, practical, and neutral.\nAvoid marketing language and avoid filler.",
+    "audience": "[choose one or more]\n- Maintainers\n- New team members\n- Internal developers consuming the API\n- External integrators\n- Open-source contributors\nState the audience explicitly and write for that audience.",
+    "response": "Return the documentation in the requested artifact format.\nPossible artifacts include:\n- README\n- Quickstart\n- Setup guide\n- API guide\n- Inline docstrings or JSDoc\n- Module overview\n- Troubleshooting guide\n- Contribution guide\n\nAdditional rules:\n- Prioritize first-run usability.\n- Explain how to start, verify, and troubleshoot.\n- Keep environment variables, prerequisites, and commands explicit.\n- When documenting APIs, include routes, parameters, request examples, response examples, and likely errors.\n- When documenting code symbols, include purpose, parameters, return values, exceptions, and a short usage example.\n- Use existing documentation samples as few-shot guidance when available.\n- End with a reflective pass that checks completeness, audience fit, and copy-paste realism.\n\nRequested scope:\nCreate documentation for: [insert scope]\n\nExpected output structure:\n1. Audience and scope\n2. Documentation body\n3. Assumptions\n4. Reflection check\n\nIn \"Reflection check\", verify:\n- The target audience can get started quickly\n- The commands are complete\n- The document covers the main operational questions\n- No critical prerequisite or environment variable was omitted"
+  }
+}

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SDLC Prompt Library</title>
+  <link href="css/styles.css" rel="stylesheet">
+  <link href="css/sdlc.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">Context Engineering</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="ai-ecosystem.html">AI ecosystem</a>
+        <a href="context-aware-prompt-builder.html">Prompt builder</a>
+        <a href="sdlc_prompt_library.html" style="color: var(--accent);">SDLC library</a>
+        <a href="context-engineering-radar.html">Radar</a>
+        <a href="references.html">Further reading</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="sdlc-container">
+    <h1>SDLC Prompt Library</h1>
+    <div class="sdlc-subtitle">Browse reusable prompts across software development roles.</div>
+
+    <div class="sdlc-controls">
+      <select id="frameworkFilter">
+        <option value="all">All frameworks</option>
+        <option value="10-step">10-step</option>
+        <option value="COSTAR">COSTAR</option>
+        <option value="CRISPE">CRISPE</option>
+        <option value="RTF">RTF</option>
+      </select>
+      <input id="searchInput" placeholder="Search role..." />
+    </div>
+
+    <div id="grid" class="sdlc-grid"></div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-container">
+      Context Engineering · © <a href="https://bonigarcia.dev/">Boni García</a>
+    </div>
+  </footer>
+
+  <script>
+    const FILES = [
+      '01_architect.json','02_developer.json','03_debugger.json',
+      '04_reviewer.json','05_refactorer.json','06_tester.json','07_documenter.json'
+    ];
+
+    const BASE = 'sdlc_prompt_library/';
+    const grid = document.getElementById('grid');
+    const filter = document.getElementById('frameworkFilter');
+    const search = document.getElementById('searchInput');
+
+    let cards = [];
+    let expandedId = null;
+
+    function titleFromFile(file) {
+      const name = file.split('_')[1].replace('.json','');
+      return name.charAt(0).toUpperCase() + name.slice(1);
+    }
+
+    async function loadAll() {
+      const res = await Promise.all(FILES.map(f => fetch(BASE + f).then(r => r.json())));
+      cards = res.map((d,i) => ({
+        id: FILES[i],
+        title: `${i+1}. The ${titleFromFile(FILES[i])}`,
+        framework: d.framework,
+        prompt: d.prompt,
+        preview: (Object.values(d.prompt)[0] || '').slice(0,120)
+      }));
+      render();
+    }
+
+    function render() {
+      const f = filter.value;
+      const q = search.value.toLowerCase();
+      grid.innerHTML = '';
+
+      cards
+        .filter(c => (f==='all'||c.framework===f))
+        .filter(c => c.title.toLowerCase().includes(q))
+        .forEach(c => {
+          const el = document.createElement('div');
+          el.className = 'card sdlc-card';
+
+          if (expandedId === c.id) {
+            el.classList.add('expanded');
+            el.appendChild(renderExpanded(c));
+          } else {
+            el.innerHTML = `
+              <div class="title">${c.title}</div>
+              <div class="badge">${c.framework}</div>
+              <div class="preview">${c.preview}...</div>
+            `;
+            el.onclick = () => {
+              expandedId = c.id;
+              render();
+            };
+          }
+          grid.appendChild(el);
+        });
+    }
+
+    function renderExpanded(c) {
+      const wrapper = document.createElement('div');
+      wrapper.style.position = 'relative';
+
+      const close = document.createElement('button');
+      close.textContent = '✕';
+      close.className = 'btn btn-ghost';
+      close.style.position = 'absolute';
+      close.style.right = '0';
+      close.style.top = '0';
+      close.onclick = (e) => {
+        e.stopPropagation();
+        expandedId = null;
+        render();
+      };
+      wrapper.appendChild(close);
+
+      const h2 = document.createElement('h2');
+      h2.textContent = c.title;
+      wrapper.appendChild(h2);
+
+      const badge = document.createElement('div');
+      badge.className = 'badge';
+      badge.textContent = c.framework;
+      badge.style.marginBottom = '16px';
+      wrapper.appendChild(badge);
+
+      Object.entries(c.prompt).forEach(([key, val]) => {
+        const sec = document.createElement('div');
+        sec.className = 'sdlc-section';
+        sec.innerHTML = `
+          <div class="sdlc-section-title">${key}</div>
+          <div class="sdlc-section-body">${val}</div>
+        `;
+        wrapper.appendChild(sec);
+      });
+
+      const actions = document.createElement('div');
+      actions.className = 'sdlc-actions';
+
+      const copy = document.createElement('button');
+      copy.textContent = 'Copy Prompt';
+      copy.className = 'btn btn-primary';
+      copy.onclick = () => {
+        const full = Object.values(c.prompt).join('\n\n');
+        navigator.clipboard.writeText(full);
+        copy.textContent = 'Copied!';
+        setTimeout(() => copy.textContent = 'Copy Prompt', 2000);
+      };
+
+      const openBuilder = document.createElement('a');
+      openBuilder.textContent = 'Open in Builder';
+      openBuilder.className = 'btn btn-ghost';
+      openBuilder.href = `context-aware-prompt-builder.html?share=${btoa(JSON.stringify(c.prompt))}`;
+
+      actions.appendChild(copy);
+      actions.appendChild(openBuilder);
+      wrapper.appendChild(actions);
+
+      return wrapper;
+    }
+
+    filter.onchange = render;
+    search.oninput = render;
+
+    loadAll();
+  </script>
+</body>
+</html>

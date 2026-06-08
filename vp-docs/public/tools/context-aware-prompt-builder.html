@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Context-aware prompt builder</title>
+  <meta name="description" content="A simple context-aware prompt builder." />
+  <meta name="author" content="Boni García">
+  <link href="css/styles.css" rel="stylesheet">
+  <link href="css/builder.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">Context Engineering</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="ai-ecosystem.html">AI ecosystem</a>
+        <a href="context-aware-prompt-builder.html" style="color: var(--accent);">Prompt builder</a>
+        <a href="sdlc_prompt_library.html">SDLC library</a>
+        <a href="context-engineering-radar.html">Radar</a>
+        <a href="references.html">Further reading</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="docs-container">
+    <header class="builder-header">
+      <div class="builder-brand">
+        <div class="builder-title">Context-aware prompt builder</div>
+        <div class="builder-subtitle">Design, compare, and reuse structured prompts across multiple frameworks and AI models.</div>
+        <div class="builder-selectors-row">
+          <div class="builder-selector-block">
+            <span class="builder-selector-label">Framework</span>
+            <select id="frameworkSelect" aria-label="Prompt framework"></select>
+          </div>
+          <div class="builder-selector-block">
+            <span class="builder-selector-label">Target model</span>
+            <select id="modelSelect" aria-label="Target model"></select>
+          </div>
+          <div class="builder-selector-block">
+            <span class="builder-selector-label">Prompt sample</span>
+            <select id="sampleSelect" aria-label="Prompt sample"></select>
+          </div>
+        </div>
+      </div>
+
+      <div class="builder-header-right">
+        <div class="builder-actions">
+          <button id="copyAll" class="btn btn-primary" title="Copy prompt">Copy prompt</button>
+          <button id="exportData" class="btn btn-ghost" title="Download all fields as JSON">Export</button>
+          <label class="btn btn-ghost" title="Import from a JSON file" style="cursor: pointer;">Import
+            <input id="importFile" type="file" accept="application/json" hidden>
+          </label>
+          <button id="clearAll" class="btn btn-danger" title="Clear all fields & local memory">Reset</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="builder-grid" id="fields">
+      <!-- Cards will be injected by JS based on the selected framework -->
+    </main>
+  </div>
+
+  <div class="builder-footerbar" role="contentinfo">
+    <span class="builder-subtitle" style="font-size:12px;">Your edits are saved automatically locally on this device.</span>
+    <span class="builder-stamp" id="savedStamp" aria-live="polite"></span>
+  </div>
+
+  <footer class="footer" style="margin-bottom: 60px;">
+    <div class="footer-container">
+      Context Engineering · © <a href="https://bonigarcia.dev/">Boni García</a>
+    </div>
+  </footer>
+
+  <div id="toast" class="builder-toast" role="status" aria-live="polite"></div>
+
+  <script>
+    (function() {
+      // ---- Frameworks ------------------------------------------------------
+      const FRAMEWORKS = {
+        tenPart: {
+          id: 'tenPart',
+          name: "10-step prompt structure",
+          cards: [
+            {
+              id: 'role',
+              title: '1. Task context',
+              label: 'Persona (role), domain, and the ultimate goal',
+              placeholder: 'E.g., You will be acting as an AI career coach named Joe created by the company AdAstra Careers. Your goal is to give career advice to users.',
+              cardClass: 'card1'
+            },
+            {
+              id: 'style',
+              title: '2. Tone context',
+              label: 'Desired communication style (e.g., factual, empathetic, professional)',
+              placeholder: 'E.g., You should maintain a friendly customer service tone.',
+              cardClass: 'card1'
+            },
+            {
+              id: 'background',
+              title: '3. Background data, documents, and images',
+              label: 'Reusable information like documentation, schemas, or policies',
+              placeholder: 'E.g., Here is the career guidance document you should reference when answering the user: <guide>[DOCUMENT]</guide>',
+              cardClass: 'card3'
+            },
+            {
+              id: 'constraints',
+              title: '4. Detailed task description & rules',
+              label: 'Step-by-step instructions and operational constraints',
+              placeholder: 'E.g., Here are some important rules for the interaction: If you are unsure how to respond, say "Sorry, I didn\'t understand that. Could you repeat the question?"',
+              cardClass: 'card4'
+            },
+            {
+              id: 'examples',
+              title: '5. Examples',
+              label: 'Sample of how to respond in standard interactions',
+              placeholder: 'E.g., Here is an example of how to respond in a standard interaction:...',
+              cardClass: 'card5'
+            },
+            {
+              id: 'history',
+              title: '6. Conversation history',
+              label: 'Context of the current interaction',
+              placeholder: 'E.g., Here is the conversation history (between the user and you) prior to the question. It could be empty if there is no prior history: <history>[HISTORY]</history>',
+              cardClass: 'card6'
+            },
+            {
+              id: 'request',
+              title: '7. Immediate task description or request',
+              label: 'User\'s most recent query',
+              placeholder: 'E.g., Here is the user\'s question: <question>[QUESTION]</question>',
+              cardClass: 'card7'
+            },
+            {
+              id: 'reasoning',
+              title: '8. Thinking step by step / take a deep breath',
+              label: 'Reasoning guidance',
+              placeholder: 'E.g., Think about your answer first before you respond.',
+              cardClass: 'card8'
+            },
+            {
+              id: 'format',
+              title: '9. Output formatting',
+              label: 'Required output structure, such as JSON, XML, etc.',
+              placeholder: 'E.g., Put your response in <response></response> tags.',
+              cardClass: 'card9'
+            },
+            {
+              id: 'response',
+              title: '10. Prefilled response (if any)',
+              label: 'Optional skeleton the model can complete',
+              placeholder: '<response>',
+              cardClass: 'card9'
+            }
+          ]
+        },
+
+        costar: {
+          id: 'costar',
+          name: 'COSTAR',
+          cards: [
+            {
+              id: 'co_context',
+              title: '1. Context',
+              label: 'Background, situation, and constraints',
+              placeholder: 'Describe the situation, relevant background, and any key constraints.',
+              cardClass: 'card1'
+            },
+            {
+              id: 'co_objective',
+              title: '2. Objective',
+              label: 'Goal of the interaction',
+              placeholder: 'Clearly state the outcome you want the model to achieve.',
+              cardClass: 'card3'
+            },
+            {
+              id: 'co_style',
+              title: '3. Style',
+              label: 'Communication style and level',
+              placeholder: 'E.g., concise, expert-level, friendly, formal, etc.',
+              cardClass: 'card4'
+            },
+            {
+              id: 'co_tone',
+              title: '4. Tone',
+              label: 'Tone and attitude',
+              placeholder: 'E.g., optimistic, neutral, direct, supportive.',
+              cardClass: 'card5'
+            },
+            {
+              id: 'co_audience',
+              title: '5. Audience',
+              label: 'Who will read the answer',
+              placeholder: 'Describe the target audience, their knowledge level, and needs.',
+              cardClass: 'card6'
+            },
+            {
+              id: 'co_response',
+              title: '6. Response',
+              label: 'How the model should respond',
+              placeholder: 'Specify output format, length, and any must-include or must-avoid items.',
+              cardClass: 'card9'
+            }
+          ]
+        },
+
+        crispe: {
+          id: 'crispe',
+          name: 'CRISPE',
+          cards: [
+            {
+              id: 'cr_capacity',
+              title: '1. Capacity & Role (CR)',
+              label: 'Who the model is and what it can do',
+              placeholder: 'Define the model\'s role, expertise, and boundaries.',
+              cardClass: 'card1'
+            },
+            {
+              id: 'cr_insights',
+              title: '2. Insights (I)',
+              label: 'Important data, context, or references',
+              placeholder: 'Provide background information, data, and context.',
+              cardClass: 'card3'
+            },
+            {
+              id: 'cr_steps',
+              title: '3. Statement (S)',
+              label: 'Step-by-step reasoning and workflow',
+              placeholder: 'Describe how you want the model to think or work through the problem.',
+              cardClass: 'card4'
+            },
+            {
+              id: 'cr_personalization',
+              title: '4. Personality (P)',
+              label: 'User-specific preferences',
+              placeholder: 'Specify the style, tone, and formatting of the response.',
+              cardClass: 'card5'
+            },
+            {
+              id: 'cr_examples',
+              title: '5. Experiment (E)',
+              label: 'Positive and/or negative examples',
+              placeholder: 'Provide examples of good responses (and optionally bad ones to avoid).',
+              cardClass: 'card6'
+            }
+          ]
+        },
+
+        rtf: {
+          id: 'rtf',
+          name: 'RTF',
+          cards: [
+            {
+              id: 'rt_role',
+              title: '1. Role',
+              label: 'Who the model should be',
+              placeholder: 'E.g., You are a cybersecurity analyst specializing in web application security.',
+              cardClass: 'card1'
+            },
+            {
+              id: 'rt_task',
+              title: '2. Task',
+              label: 'What you want the model to do',
+              placeholder: 'Describe the task in clear, specific language, including any constraints.',
+              cardClass: 'card3'
+            },
+            {
+              id: 'rt_format',
+              title: '3. Format',
+              label: 'How the output should be structured',
+              placeholder: 'E.g., Return a markdown table with columns: Risk, Impact, Mitigation.',
+              cardClass: 'card9'
+            }
+          ]
+        },
+
+        bab: {
+          id: 'bab',
+          name: 'BAB',
+          cards: [
+            {
+              id: 'bab_before',
+              title: '1. Before',
+              label: 'Current situation',
+              placeholder: 'Describe the current state or problem in detail.',
+              cardClass: 'card1'
+            },
+            {
+              id: 'bab_after',
+              title: '2. After',
+              label: 'Desired outcome',
+              placeholder: 'Describe the ideal future state after the model\'s help.',
+              cardClass: 'card3'
+            },
+            {
+              id: 'bab_bridge',
+              title: '3. Bridge',
+              label: 'How the model should get from Before to After',
+              placeholder: 'Explain the transformation, steps, or messaging you want the model to provide.',
+              cardClass: 'card4'
+            }
+          ]
+        }
+      };
+
+      // ---- Target models (no dates in labels) -----------------------------
+      const MODELS = {
+        gpt55: { id: 'gpt55', name: 'GPT-5.5', display: 'GPT-5.5 · 1M tokens', maxTokens: 1000000 },
+        gpt51: { id: 'gpt51', name: 'GPT-5.1', display: 'GPT-5.1 · 400k tokens', maxTokens: 400000 },
+        claude55sonnet: { id: 'claude55sonnet', name: 'Claude 5.5 Sonnet', display: 'Claude 5.5 Sonnet · 1M tokens', maxTokens: 1000000 },
+        claude5opus: { id: 'claude5opus', name: 'Claude 5 Opus', display: 'Claude 5 Opus · 1M tokens', maxTokens: 1000000 },
+        gemini35pro: { id: 'gemini35pro', name: 'Gemini 3.5 Pro', display: 'Gemini 3.5 Pro · 2M tokens', maxTokens: 2000000 },
+        gemini35flash: { id: 'gemini35flash', name: 'Gemini 3.5 Flash', display: 'Gemini 3.5 Flash · 1M tokens', maxTokens: 1000000 },
+        llama5: { id: 'llama5', name: 'Llama 5', display: 'Llama 5 · 10M tokens', maxTokens: 10000000 },
+        grok5: { id: 'grok5', name: 'Grok 5', display: 'Grok 5 · 2M tokens', maxTokens: 2000000 },
+        kimik26: { id: 'kimik26', name: 'Kimi K2.6', display: 'Kimi K2.6 · 2M tokens', maxTokens: 2000000 }
+      };
+
+      const DEFAULT_FRAMEWORK_ID = 'tenPart';
+      const DEFAULT_MODEL_ID = 'gpt55';
+      const STORAGE_KEY = 'context-builder:v5';
+
+      const savedStamp = document.getElementById('savedStamp');
+      const toast = document.getElementById('toast');
+      const frameworkSelect = document.getElementById('frameworkSelect');
+      const modelSelect = document.getElementById('modelSelect');
+      const sampleSelect = document.getElementById('sampleSelect');
+      const fieldsContainer = document.getElementById('fields');
+
+      let state = {
+        activeFrameworkId: DEFAULT_FRAMEWORK_ID,
+        activeModelId: DEFAULT_MODEL_ID,
+        data: {} // { frameworkId: { fieldId: value } }
+      };
+
+      // ---- Toast & stamp ----------------------------------------------------
+      function showToast(msg) {
+        toast.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 1800);
+      }
+
+      function setSavedStamp() {
+        const fw = FRAMEWORKS[state.activeFrameworkId];
+        const model = MODELS[state.activeModelId];
+        const ts = new Date().toLocaleString();
+        const bits = [];
+        if (fw) bits.push(fw.name);
+        if (model) bits.push(model.name);
+        savedStamp.textContent = `${bits.join(' · ')} · Saved ${ts}`;
+      }
+
+      // ---- Storage ---------------------------------------------------------
+      function save() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+          setSavedStamp();
+        } catch (e) {
+          console.error('Save failed', e);
+          showToast('⚠️ Could not save (storage full or blocked)');
+        }
+      }
+
+      function load() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return null;
+          const parsed = JSON.parse(raw);
+          if (!parsed || typeof parsed !== 'object') return null;
+          return parsed;
+        } catch (e) {
+          console.error('Load failed', e);
+          return null;
+        }
+      }
+
+      function tryMigrateFromOlder() {
+        ['context-builder:v4', 'context-builder:v3', 'context-builder:v2', 'context-builder:v1'].forEach(key => {
+          try {
+            const raw = localStorage.getItem(key);
+            if (raw) {
+              const parsed = JSON.parse(raw);
+              if (parsed && typeof parsed === 'object') {
+                if (key === 'context-builder:v1') {
+                  state.data[DEFAULT_FRAMEWORK_ID] = parsed;
+                  localStorage.removeItem(key);
+                } else {
+                  state.activeFrameworkId = parsed.activeFrameworkId || state.activeFrameworkId;
+                  state.activeModelId = parsed.activeModelId || state.activeModelId;
+                  state.data = parsed.data || state.data;
+                }
+                save();
+              }
+            }
+          } catch (e) {}
+        });
+      }
+
+      // ---- Helpers: framework/model ----------------------------------------
+      function getActiveFramework() {
+        return FRAMEWORKS[state.activeFrameworkId] || FRAMEWORKS[DEFAULT_FRAMEWORK_ID];
+      }
+
+      function getFrameworkData(id) {
+        if (!state.data[id]) state.data[id] = {};
+        return state.data[id];
+      }
+
+      function renderFrameworkOptions() {
+        frameworkSelect.innerHTML = '';
+        Object.values(FRAMEWORKS).forEach(fw => {
+          const opt = document.createElement('option');
+          opt.value = fw.id;
+          opt.textContent = fw.name;
+          frameworkSelect.appendChild(opt);
+        });
+        frameworkSelect.value = state.activeFrameworkId;
+      }
+
+      function renderModelOptions() {
+        modelSelect.innerHTML = '';
+        Object.values(MODELS).forEach(m => {
+          const opt = document.createElement('option');
+          opt.value = m.id;
+          opt.textContent = m.display;
+          modelSelect.appendChild(opt);
+        });
+        modelSelect.value = state.activeModelId;
+      }
+
+      function renderSampleOptions() {
+        sampleSelect.innerHTML = '';
+        const options = [
+          { value: 'none', label: 'None' },
+          { value: 'architect', label: '1. Architect' },
+          { value: 'developer', label: '2. Developer' },
+          { value: 'debugger', label: '3. Debugger' },
+          { value: 'reviewer', label: '4. Reviewer' },
+          { value: 'refactorer', label: '5. Refactorer' },
+          { value: 'tester', label: '6. Tester' },
+          { value: 'documenter', label: '7. Documenter' }
+        ];
+        options.forEach(o => {
+          const opt = document.createElement('option');
+          opt.value = o.value;
+          opt.textContent = o.label;
+          sampleSelect.appendChild(opt);
+        });
+        sampleSelect.value = 'none';
+      }
+
+      // ---- Sample loading -------------------------------------------------
+      const SAMPLE_FILES = {
+        architect: '01_architect.json', developer: '02_developer.json', debugger: '03_debugger.json',
+        reviewer: '04_reviewer.json', refactorer: '05_refactorer.json', tester: '06_tester.json',
+        documenter: '07_documenter.json'
+      };
+      const SAMPLE_BASE_PATH = 'sdlc_prompt_library/';
+      const sampleCache = {};
+
+      async function loadSample(sampleKey) {
+        if (sampleCache[sampleKey]) return sampleCache[sampleKey];
+        const res = await fetch(SAMPLE_BASE_PATH + SAMPLE_FILES[sampleKey]);
+        const data = await res.json();
+        sampleCache[sampleKey] = data;
+        return data;
+      }
+
+      function clearAllFields() {
+        const fw = getActiveFramework();
+        const data = getFrameworkData(fw.id);
+        fw.cards.forEach(card => data[card.id] = '');
+        renderFields();
+        save();
+      }
+
+      function applyFrameworkByName(name) {
+        let normalized = name.toLowerCase();
+        if (normalized === '10-step') normalized = 'tenPart';
+        if (!FRAMEWORKS[normalized]) return;
+        state.activeFrameworkId = normalized;
+        frameworkSelect.value = normalized;
+        renderFields();
+      }
+
+      function fillFieldsFromSample(promptData) {
+        const fw = getActiveFramework();
+        renderFields();
+        Object.entries(promptData).forEach(([key, value]) => {
+          let fieldId = null;
+          if (fw.id === 'costar') fieldId = `co_${key}`;
+          if (fw.id === 'tenPart') {
+            const map = { context:'role', tone:'style', background:'background', details:'constraints', examples:'examples', history:'history', request:'request', thinking:'reasoning', output:'format', prefilled:'response' };
+            fieldId = map[key];
+          }
+          if (fw.id === 'crispe') {
+            const map = { capacity:'cr_capacity', insight:'cr_insights', statement:'cr_steps', personality:'cr_personalization', experiment:'cr_examples' };
+            fieldId = map[key];
+          }
+          if (fw.id === 'rtf') {
+            const map = { role:'rt_role', task:'rt_task', format:'rt_format' };
+            fieldId = map[key];
+          }
+          if (fieldId) {
+            const el = document.getElementById(`field-${fieldId}`);
+            if (el) el.value = value;
+          }
+        });
+      }
+
+      sampleSelect.addEventListener('change', async (e) => {
+        const val = e.target.value;
+        if (val === 'none') { clearAllFields(); return; }
+        try {
+          const data = await loadSample(val);
+          applyFrameworkByName(data.framework);
+          fillFieldsFromSample(data.prompt);
+          showToast('Sample loaded');
+        } catch (err) {
+          showToast('⚠️ Failed to load sample');
+        }
+      });
+
+      // ---- Fields rendering -------------------------------------------------
+      function renderFields() {
+        const fw = getActiveFramework();
+        const data = getFrameworkData(fw.id);
+        fieldsContainer.innerHTML = '';
+
+        fw.cards.forEach((card, index) => {
+          const section = document.createElement('section');
+          section.className = `card builder-card ${card.cardClass || ''}`;
+          section.innerHTML = `
+            <h3>${card.title || `Field ${index + 1}`}</h3>
+            <div class="body">
+              <label for="field-${card.id}">${card.label || card.title || card.id}</label>
+              <textarea id="field-${card.id}" placeholder="${card.placeholder || ''}">${data[card.id] || ''}</textarea>
+            </div>
+          `;
+          fieldsContainer.appendChild(section);
+        });
+
+        const composedSection = document.createElement('section');
+        composedSection.className = 'card builder-card';
+        composedSection.style.gridColumn = '1 / -1';
+        composedSection.style.background = '#ffffff';
+        composedSection.innerHTML = `
+          <h3>Composed prompt</h3>
+          <div class="body">
+            <div class="usage-block">
+              <div class="usage-header">
+                <span>Context usage (approximate)</span>
+                <span id="usageNumbers">0 / 0 tokens (0%)</span>
+              </div>
+              <div class="usage-bar"><div id="usageBarFill" class="usage-bar-fill"></div></div>
+              <div class="usage-legend">
+                <span><span class="legend-dot legend-optimal"></span>Optimal (&lt; 50%)</span>
+                <span><span class="legend-dot legend-warning"></span>Warning (50–80%)</span>
+                <span><span class="legend-dot legend-danger"></span>Danger (&gt; 80%)</span>
+              </div>
+            </div>
+            <label for="output">This read-only field composes your prompt</label>
+            <textarea id="output" class="mono builder-textarea" readonly></textarea>
+            <div class="builder-hint">Tip: the composed prompt updates as you type. Use <strong>Copy prompt</strong> above to put it on your clipboard.</div>
+          </div>
+        `;
+        fieldsContainer.appendChild(composedSection);
+
+        attachFieldListeners();
+        updateComposedFromState();
+        updateUsageMeter();
+      }
+
+      function buildFinalPrompt() {
+        const fw = getActiveFramework();
+        const data = getFrameworkData(fw.id);
+        return fw.cards.map(card => (data[card.id] || '').trim()).filter(v => v).join('\n\n');
+      }
+
+      function updateComposedFromState() {
+        const output = document.getElementById('output');
+        if (output) output.value = buildFinalPrompt();
+      }
+
+      function estimateTokens(text) { return Math.ceil((text || '').length / 4); }
+
+      function updateUsageMeter() {
+        const usageNumbers = document.getElementById('usageNumbers');
+        const usageBarFill = document.getElementById('usageBarFill');
+        const output = document.getElementById('output');
+        if (!usageNumbers || !usageBarFill || !output) return;
+
+        const model = MODELS[state.activeModelId] || MODELS[DEFAULT_MODEL_ID];
+        const used = estimateTokens(output.value);
+        const max = model.maxTokens || 1;
+        const pct = Math.min(100, Math.round((used / max) * 100));
+
+        usageNumbers.textContent = `${used.toLocaleString()} / ${max.toLocaleString()} tokens (${pct}%)`;
+        usageBarFill.style.width = `${pct}%`;
+        usageBarFill.className = 'usage-bar-fill ' + (pct < 50 ? 'ok' : pct < 80 ? 'warn' : 'danger');
+      }
+
+      function readFieldsIntoState() {
+        const fw = getActiveFramework();
+        const data = getFrameworkData(fw.id);
+        fw.cards.forEach(card => {
+          const el = document.getElementById(`field-${card.id}`);
+          if (el) data[card.id] = el.value.trim();
+        });
+      }
+
+      let saveTimer;
+      function scheduleSave() {
+        clearTimeout(saveTimer);
+        saveTimer = setTimeout(() => {
+          readFieldsIntoState();
+          updateComposedFromState();
+          updateUsageMeter();
+          save();
+        }, 250);
+      }
+
+      function attachFieldListeners() {
+        getActiveFramework().cards.forEach(card => {
+          const el = document.getElementById(`field-${card.id}`);
+          if (el) el.oninput = scheduleSave;
+        });
+      }
+
+      document.getElementById('copyAll').onclick = async () => {
+        try {
+          await navigator.clipboard.writeText(document.getElementById('output').value);
+          showToast('Copied composed output');
+        } catch { showToast('Press Ctrl/Cmd+C to copy'); }
+      };
+
+      document.getElementById('exportData').onclick = () => {
+        const fw = getActiveFramework();
+        const data = getFrameworkData(fw.id);
+        let prompt = {};
+        if (fw.id === 'costar') prompt = { context: data.co_context||'', objective: data.co_objective||'', style: data.co_style||'', tone: data.co_tone||'', audience: data.co_audience||'', response: data.co_response||'' };
+        if (fw.id === 'tenPart') prompt = { context: data.role||'', tone: data.style||'', background: data.background||'', details: data.constraints||'', examples: data.examples||'', history: data.history||'', request: data.request||'', thinking: data.reasoning||'', output: data.format||'', prefilled: data.response||'' };
+        if (fw.id === 'crispe') prompt = { capacity: data.cr_capacity||'', insight: data.cr_insights||'', statement: data.cr_steps||'', personality: data.cr_personalization||'', experiment: data.cr_examples||'' };
+        if (fw.id === 'rtf') prompt = { role: data.rt_role||'', task: data.rt_task||'', format: data.rt_format||'' };
+
+        const blob = new Blob([JSON.stringify({ framework: fw.id==='tenPart'?'10-step':fw.name, prompt }, null, 2)], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob); a.download = 'prompt.json';
+        a.click();
+        showToast('Exported to JSON');
+      };
+
+      document.getElementById('importFile').onchange = ev => {
+        const file = ev.target.files?.[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+          try {
+            const obj = JSON.parse(String(reader.result || '{}'));
+            if (obj && obj.framework && obj.prompt) {
+              applyFrameworkByName(obj.framework);
+              fillFieldsFromSample(obj.prompt);
+              save();
+              showToast('Imported data');
+            } else { showToast('Unsupported JSON schema'); }
+          } catch (e) { showToast('Invalid JSON file'); }
+          ev.target.value = '';
+        };
+        reader.readAsText(file);
+      };
+
+      document.getElementById('clearAll').onclick = () => {
+        if (!confirm('Clear all frameworks and local memory?')) return;
+        state = { activeFrameworkId: DEFAULT_FRAMEWORK_ID, activeModelId: DEFAULT_MODEL_ID, data: {} };
+        save();
+        renderFrameworkOptions(); renderModelOptions(); renderFields();
+        showToast('Cleared all data');
+      };
+
+      function tryImportFromHash() {
+        const hash = location.hash || location.search;
+        const m = hash.match(/[?#].*share=([^&]+)/);
+        if (!m) return false;
+        try {
+          const decoded = JSON.parse(atob(decodeURIComponent(m[1])));
+          if (decoded && decoded.data && decoded.activeFrameworkId) {
+            state = { activeFrameworkId: decoded.activeFrameworkId, activeModelId: decoded.activeModelId || DEFAULT_MODEL_ID, data: decoded.data };
+          } else if (decoded && typeof decoded === 'object') {
+            fillFieldsFromSample(decoded);
+          }
+          renderFrameworkOptions(); renderModelOptions(); renderFields();
+          save();
+          showToast('Loaded from link');
+          return true;
+        } catch { return false; }
+      }
+
+      document.addEventListener('keydown', async (e) => {
+        if ((e.key === 's' || e.key === 'S') && (e.ctrlKey || e.metaKey)) {
+          e.preventDefault();
+          const url = location.origin + location.pathname + '#share=' + encodeURIComponent(btoa(JSON.stringify(state)));
+          try { await navigator.clipboard.writeText(url); showToast('Share link copied'); } catch { showToast('Share link ready'); }
+          history.replaceState(null, '', url);
+        }
+      });
+
+      frameworkSelect.onchange = () => {
+        readFieldsIntoState();
+        state.activeFrameworkId = frameworkSelect.value || DEFAULT_FRAMEWORK_ID;
+        renderFields();
+        save();
+      };
+
+      modelSelect.onchange = () => {
+        state.activeModelId = modelSelect.value || DEFAULT_MODEL_ID;
+        updateUsageMeter();
+        save();
+      };
+
+      const loaded = load();
+      if (loaded) {
+        state = { activeFrameworkId: loaded.activeFrameworkId || DEFAULT_FRAMEWORK_ID, activeModelId: loaded.activeModelId || DEFAULT_MODEL_ID, data: loaded.data || {} };
+      } else { tryMigrateFromOlder(); }
+
+      renderFrameworkOptions(); renderModelOptions(); renderSampleOptions();
+      if (!tryImportFromHash()) { renderFields(); }
+    })();
+  </script>
+</body>
+</html>

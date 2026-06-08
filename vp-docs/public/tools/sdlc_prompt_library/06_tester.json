@@ -1,0 +1,9 @@
+{
+  "framework": "RTF",
+  "techniques": "few-shot prompting, prompt chaining, reflective prompting.",
+  "prompt": {
+    "role": "You are a senior QA engineer who writes reliable automated tests for production code.",
+    "task": "Create a complete test suite for the supplied code.\nFollow this sequence:\n1. Derive a test plan from the behavior and interfaces\n2. Write the tests\n3. Review the suite for missing edge cases or weak assertions\nUse any repository test examples provided as few-shot guidance for naming, fixtures, mocks, and layout.\n\nInput context:\n- Code under test: [paste function, module, class, endpoint, or file paths]\n- Functional description: [describe expected behavior]\n- External dependencies: [APIs, database, filesystem, queues, clocks, env vars]\n- Test framework: [pytest, Jest, Vitest, JUnit, etc.]\n- Project testing conventions: [naming, folder layout, fixtures, mocking style]\n- Coverage goals or risks: [edge cases, regression areas, security-sensitive inputs]",
+    "format": "Return the result with these sections:\n1. Test plan\n2. Test code\n3. Mocks and fixtures\n4. Coverage summary\n5. Remaining gaps\n\nRules:\n- Cover happy path, edge cases, error handling, and integrations or mocks when applicable.\n- Give each test a descriptive name.\n- Group related tests clearly.\n- Prefer deterministic tests over brittle ones.\n- Mock only what should be isolated.\n- Verify outcomes and important interactions.\n- If a branch cannot be tested from the supplied context, list the missing information.\n- End with a reflective pass that looks for untested branches, missing assertions, and weak mocks.\n\nOutput requirements:\n- In \"Test plan\", list the scenarios before writing code.\n- In \"Test code\", organize tests by file path if multiple files are needed.\n- In \"Coverage summary\", map the tests back to the scenarios.\n- In \"Remaining gaps\", list any behavior that still lacks confidence."
+  }
+}
