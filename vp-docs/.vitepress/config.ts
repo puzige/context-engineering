@@ -4,7 +4,6 @@ export default defineConfig({
   title: 'Context Engineering',
   description: 'Building Consistent, Accurate, Predictable AI Systems',
   outDir: '../dist',
-  publicDir: 'public',
   base: '/context-engineering/',
   ignoreDeadLinks: true,
 
