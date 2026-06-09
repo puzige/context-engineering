@@ -1,14 +1,16 @@
 import { defineConfig } from 'vitepress'
 
+const base = process.env.CF_PAGES ? '/' : '/context-engineering/'
+
 export default defineConfig({
   title: 'Context Engineering',
   description: 'Building Consistent, Accurate, Predictable AI Systems',
   outDir: '../dist',
-  base: '/context-engineering/',
+  base,
   ignoreDeadLinks: true,
 
   head: [
-    ['link', { rel: 'icon', href: '/context-engineering/favicon.ico' }]
+    ['link', { rel: 'icon', href: `${base}favicon.ico` }]
   ],
 
   themeConfig: {
