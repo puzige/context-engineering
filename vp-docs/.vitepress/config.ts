@@ -7,11 +7,31 @@ export default defineConfig({
   description: 'Building Consistent, Accurate, Predictable AI Systems',
   outDir: '../dist',
   base,
-  ignoreDeadLinks: true,
+  ignoreDeadLinks: false,
 
   head: [
     ['link', { rel: 'icon', href: `${base}favicon.ico` }]
   ],
+
+  markdown: {
+    config: (md) => {
+      const defaultRender = md.renderer.rules.link_open || function(tokens, idx, options, env, self) {
+        return self.renderToken(tokens, idx, options);
+      };
+      md.renderer.rules.link_open = function(tokens, idx, options, env, self) {
+        const token = tokens[idx];
+        const hrefIndex = token.attrIndex('href');
+        if (hrefIndex >= 0) {
+          const href = token.attrs[hrefIndex][1];
+          const match = href.match(/^(?:\.\.\/)+ch(0[1-9]|1[0-2])\/(.+)$/);
+          if (match) {
+            token.attrs[hrefIndex][1] = `https://github.com/peanut996/context-engineering/blob/master/ch${match[1]}/${match[2]}`;
+          }
+        }
+        return defaultRender(tokens, idx, options, env, self);
+      };
+    }
+  },
 
   themeConfig: {
     nav: [
